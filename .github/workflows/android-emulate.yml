@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 60
+      ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 840
       GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx3g"
 
     steps:
@@ -22,17 +22,15 @@ jobs:
           java-version: '17' #required Java version
 
       - name: Set up Gradle
-        uses: gradle/gradle-build-action@v3
-        with:
-          cache-disabled: false
+        uses: gradle/setup-gradle@v3
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew #Gradle wrapper with perms.
 
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Assemble Debug #Build APKs only - faster than a full build
+        run: ./gradlew assembleDebug
 
-      - name: Start AVD 
+      - name: Start Emulator 
         #spins up an emulator on the github-hosted runner
         uses: reactivecircus/android-emulator-runner@v2 
         with: #explain all below
@@ -40,6 +38,5 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_5 #device
-          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
-          disable-animations: true
+          emulator-options: -no-snapshot -gpu swiftshader_indirect -noaudio -no-boot-anim
           script: ./gradlew connectedCheck
