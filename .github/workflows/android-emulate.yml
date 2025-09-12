@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL: 60
+      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.jvmargs="-Xmx3g"
 
     steps:
       - name: Checkout repo
@@ -20,6 +23,8 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v3
+        with:
+          cache-disabled: false
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew #Gradle wrapper with perms.
@@ -31,8 +36,10 @@ jobs:
         #spins up an emulator on the github-hosted runner
         uses: reactivecircus/android-emulator-runner@v2 
         with: #explain all below
-          api-level: 31 #our target-api 
+          api-level: 30 #our target-api 
           target: google_apis
           arch: x86_64
           profile: pixel_5 #device
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          disable-animations: true
           script: ./gradlew connectedCheck
