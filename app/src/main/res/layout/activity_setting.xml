@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    tools:context=".SettingsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_blue"
+            app:title="TENDER TOOL" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/settings_header_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/settings_header_description"
+                android:src="@drawable/settings_header_banner" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/settings_section_general"
+                android:textColor="@color/text_input_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+
+            <!-- language section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+
+                <LinearLayout
+                    android:id="@+id/language_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/input_field_bg"
+                    android:gravity="center_vertical|end"
+                    android:minWidth="150dp"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_language_value"
+                        android:textColor="@color/text_input_grey"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/settings_language"
+                        android:src="@drawable/ic_right" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/language_value"
+                    android:text="@string/settings_language"
+                    android:textColor="@color/text_label_blue"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <!-- theme section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp">
+                <LinearLayout
+                    android:id="@+id/theme_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/input_field_bg"
+                    android:gravity="center_vertical|end"
+                    android:minWidth="150dp"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_theme_value"
+                        android:textColor="@color/text_input_grey"
+                        android:textSize="16sp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/settings_theme"
+                        android:src="@drawable/ic_sun" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/theme_value"
+                    android:text="@string/settings_theme"
+                    android:textColor="@color/text_label_blue"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <!-- notifications section -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp">
+                <LinearLayout
+                    android:id="@+id/notifications_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/input_field_bg"
+                    android:gravity="center_vertical|end"
+                    android:minWidth="150dp"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_notifications_value"
+                        android:textColor="@color/text_input_grey"
+                        android:textSize="16sp" />
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/settings_notifications"
+                        android:src="@drawable/ic_email" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/notifications_value"
+                    android:text="@string/settings_notifications"
+                    android:textColor="@color/text_label_blue"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/divider_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/settings_section_profile"
+                android:textColor="@color/text_input_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
+                android:text="@string/settings_edit_profile"
+                android:textColor="@color/text_profile_options"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
+                android:text="@string/settings_change_password"
+                android:textColor="@color/text_profile_options"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="6dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/settings_biometric_login"
+                    android:textColor="@color/text_profile_options"
+                    android:textSize="18sp" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <!-- log out button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/logout_button"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/logout_button_bg"
+                android:text="@string/settings_logout"
+                android:textColor="@color/logout_button_text"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:stateListAnimator="@null"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

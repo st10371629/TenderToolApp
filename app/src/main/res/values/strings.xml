@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">TenderToolApp</string>
+    <string name="app_name">Tender Tool</string>
+    <string name="settings_header_description">Settings header with decorative gears</string>
+    <!-- settings page titles -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_general">GENERAL</string>
+    <string name="settings_section_profile">PROFILE</string>
+
+    <!-- general settings options -->
+    <string name="settings_language">Language</string>
+    <string name="settings_language_value">English (ZA) </string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_value">Light</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_notifications_value">Email</string>
+
+    <!-- profile settings pptions -->
+    <string name="settings_edit_profile">Edit Profile</string>
+    <string name="settings_change_password">Change Password</string>
+    <string name="settings_biometric_login">Biometric Login</string>
+
+    <!-- buttons -->
+    <string name="settings_logout">LOG OUT</string>
 </resources>

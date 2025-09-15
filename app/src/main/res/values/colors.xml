@@ -2,4 +2,29 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary_dark_blue">#33497D</color>
+    <color name="primary_medium_blue">#5571A6</color>
+    <color name="primary_light_background">#D6E6F2</color>
+    <color name="accent_red">#CD4F6E</color>
+    <color name="accent_yellow">#FCF8AE</color>
+
+
+    <color name="toolbar_blue">@color/primary_dark_blue</color>
+    <color name="app_background">@color/white</color>
+
+    <!-- text -->
+    <color name="text_label_blue">@color/primary_dark_blue</color>
+    <color name="text_profile_options">@color/primary_dark_blue</color>
+    <color name="text_input_grey">#546E7A</color>
+
+    <!-- input field styles -->
+    <color name="input_field_background">#F5F5F5</color>
+    <color name="input_field_border">#E0E0E0</color>
+
+    <!-- logout button -->
+    <color name="logout_button_background">#FBE9EB</color>
+    <color name="logout_button_text">#D32F2F</color>
+
+    <!-- divider line -->
+    <color name="divider_color">#E0E0E0</color>
 </resources>
