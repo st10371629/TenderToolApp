@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Pressed state -->
+    <!-- pressed state -->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <solid android:color="#1AFFFFFF" />
@@ -10,7 +10,7 @@
         </shape>
     </item>
 
-    <!-- Focused state -->
+    <!-- focused state -->
     <item android:state_focused="true">
         <shape android:shape="rectangle">
             <solid android:color="#0DFFFFFF" />
@@ -19,7 +19,7 @@
         </shape>
     </item>
 
-    <!-- Default state -->
+    <!-- default state -->
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@android:color/transparent" />
