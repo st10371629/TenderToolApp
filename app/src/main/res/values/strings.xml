@@ -21,4 +21,10 @@
 
     <!-- buttons -->
     <string name="settings_logout">LOG OUT</string>
+
+    <!-- nav bar headings -->
+    <string name="settings">Settings</string>
+    <string name="discover">Settings</string>
+    <string name="analytics">Settings</string>
+    <string name="watchlist">Settings</string>
 </resources>

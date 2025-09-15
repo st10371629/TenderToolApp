@@ -1,7 +1,9 @@
 package com.tendertool.app
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -37,6 +39,17 @@ class MainActivity : AppCompatActivity() {
                 .commit()
             registerTab.setTextColor(Color.WHITE)
             loginTab.setTextColor(Color.parseColor("#80FFFFFF"))
+        }
+
+        // nav bar code
+
+        val navSettings = findViewById<LinearLayout>(R.id.navSettings)
+
+        navSettings.setOnClickListener {
+            // launch SettingsActivity
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+
         }
     }
 }

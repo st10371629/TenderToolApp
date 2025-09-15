@@ -172,8 +172,6 @@
                     android:textSize="18sp" />
             </RelativeLayout>
 
-
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -239,5 +237,9 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
+    <include
+        layout="@layout/nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_gravity="bottom"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
