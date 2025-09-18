@@ -27,4 +27,5 @@
     <string name="discover">Settings</string>
     <string name="analytics">Settings</string>
     <string name="watchlist">Settings</string>
+    <string name="search_for_tenders">Search for tenders...</string>
 </resources>

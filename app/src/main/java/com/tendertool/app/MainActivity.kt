@@ -41,15 +41,18 @@ class MainActivity : AppCompatActivity() {
             loginTab.setTextColor(Color.parseColor("#80FFFFFF"))
         }
 
-        // nav bar code
-
         val navSettings = findViewById<LinearLayout>(R.id.navSettings)
+        val navDiscover = findViewById<LinearLayout>(R.id.navDiscover)
 
         navSettings.setOnClickListener {
-            // launch SettingsActivity
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
+            val settingsIntent = Intent(this, SettingsActivity::class.java)
+            startActivity(settingsIntent)
+        }
+
+        navDiscover.setOnClickListener {
+            val discoverIntent = Intent(this, DiscoverActivity::class.java)
+            startActivity(discoverIntent)
+        }
 
         }
     }
-}

@@ -13,6 +13,7 @@
         android:theme="@style/Theme.TenderToolApp"
         tools:targetApi="31">
         <activity android:name=".SettingsActivity" />
+        <activity android:name=".DiscoverActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
