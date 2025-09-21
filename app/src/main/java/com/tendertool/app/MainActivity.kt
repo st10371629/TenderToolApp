@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.tendertool.app.src.NavBar
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel: TestViewModel by viewModels()
+//    private val viewModel: TestViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
