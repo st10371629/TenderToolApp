@@ -5,23 +5,23 @@ import androidx.room.Entity
 @Entity(tableName = "EskomTender")
 data class EskomTender
 (
-    override val TenderID: String,
+    override val tenderID: String,
     override val title: String,
-    override val Status: String,
-    override val PublishedDate: String,
-    override val ClosingDate: String,
-    override val DateAppended: String,
-    override val Source: String,
-    override val Tags: List<Tag> = emptyList(),
-    override val Description: String? = null,
-    override val SupportingDocs: List<SupportingDoc> = emptyList(),
+    override val status: String,
+    override val publishedDate: String,
+    override val closingDate: String,
+    override val dateAppended: String,
+    override val source: String,
+    override val tags: List<Tag> = emptyList(),
+    override val description: String? = null,
+    override val supportingDocs: List<SupportingDoc> = emptyList(),
 
-    val TenderNumber: String?,
-    val Reference: String?,
-    val Audience: String?,
-    val OfficeLocation: String?,
-    val Email: String?,
-    val Address: String?,
-    val Province: String?,
+    val tenderNumber: String?,
+    val reference: String?,
+    val audience: String?,
+    val officeLocation: String?,
+    val email: String?,
+    val address: String?,
+    val province: String?,
 
-) : BaseTender(TenderID, title, Status, PublishedDate, ClosingDate, DateAppended, Source, Tags, Description, SupportingDocs)
+) : BaseTender(tenderID, title, status, publishedDate, closingDate, dateAppended, source, tags, description, supportingDocs)

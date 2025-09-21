@@ -31,6 +31,7 @@
             app:tint="@color/primary_dark_blue" />
 
         <TextView
+            android:id="@+id/locationText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Lorem ipsum dolor sit amet"
@@ -52,6 +53,7 @@
             app:tint="@color/primary_dark_blue" />
 
         <TextView
+            android:id="@+id/closingDateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2025-08-13 18:30:26 UTC"

@@ -1,38 +1,51 @@
 package com.tendertool.app
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.tendertool.app.adapters.DiscoverAdapter
+import com.tendertool.app.models.BaseTender
+import com.tendertool.app.src.APIService
+import com.tendertool.app.src.NavBar
+import com.tendertool.app.src.Retrofit
+import kotlinx.coroutines.launch
 
 class DiscoverActivity : BaseActivity() {
+
+    //private variables
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: DiscoverAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discover)
 
         // attach nav bar listeners
-        setupNavBar()
+        NavBar.LoadNav(this)
 
-        val cardContainer = findViewById<LinearLayout>(R.id.cardContainer)
+        recyclerView = findViewById(R.id.discoverRecycler)
+        adapter = DiscoverAdapter(emptyList())
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
 
-        for (i in 1..3) {
-            val card = TextView(this).apply {
-                text = "Tender Card #$i"
-                textSize = 18f
-                setTextColor(Color.BLACK)
-                setPadding(20, 20, 20, 20)
-                setBackgroundColor(Color.LTGRAY)
-                layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(0, 0, 0, 20)
-                }
+        //fetch data from the API
+        fetchTenders()
+    }
+
+    private fun fetchTenders()
+    {
+        lifecycleScope.launch{
+            try
+            {
+                val api = Retrofit.api //retrofit instance
+                val tenders: List<BaseTender> = api.fetchTenders()
+                adapter.updateData(tenders)
             }
-            cardContainer.addView(card)
+            catch (e: Exception)
+            {
+                e.printStackTrace()
+            }
         }
     }
 }

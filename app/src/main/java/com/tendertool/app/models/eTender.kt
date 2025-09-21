@@ -4,24 +4,24 @@ import androidx.room.Entity
 
 @Entity(tableName = "eTender")
 data class eTender(
-    override val TenderID: String,
+    override val tenderID: String,
     override val title: String,
-    override val Status: String,
-    override val PublishedDate: String,
-    override val ClosingDate: String,
-    override val DateAppended: String,
-    override val Source: String,
-    override val Tags: List<Tag> = emptyList(),
-    override val Description: String? = null,
-    override val SupportingDocs: List<SupportingDoc> = emptyList(),
+    override val status: String,
+    override val publishedDate: String,
+    override val closingDate: String,
+    override val dateAppended: String,
+    override val source: String,
+    override val tags: List<Tag> = emptyList(),
+    override val description: String? = null,
+    override val supportingDocs: List<SupportingDoc> = emptyList(),
 
-    val TenderNumber: String?,
-    val ProcurementMethod: String?,
-    val ProcurementMethodDetails: String?,
-    val ProcuringEntity: String?,
-    val Currency: String?,
-    val Value: Double?,
-    val Category: String?,
-    val Tenderer: String?,
+    val tenderNumber: String?,
+    val procurementMethod: String?,
+    val procurementMethodDetails: String?,
+    val procuringEntity: String?,
+    val currency: String?,
+    val value: Double?,
+    val category: String?,
+    val tenderer: String?,
 
-) : BaseTender(TenderID, title, Status, PublishedDate, ClosingDate, DateAppended, Source, Tags, Description, SupportingDocs)
+) : BaseTender(tenderID, title, status, publishedDate, closingDate, dateAppended, source, tags, description, supportingDocs)

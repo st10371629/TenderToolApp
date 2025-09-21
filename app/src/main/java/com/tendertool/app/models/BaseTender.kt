@@ -7,14 +7,14 @@ import androidx.room.PrimaryKey
 open class BaseTender
     (
     @PrimaryKey
-    open val TenderID: String,
+    open val tenderID: String,
     open val title: String,
-    open val Status: String,
-    open val PublishedDate: String,
-    open val ClosingDate: String,
-    open val DateAppended: String,
-    open val Source: String,
-    open val Tags: List<Tag> = emptyList(),
-    open val Description: String? = null,
-    open val SupportingDocs: List<SupportingDoc> = emptyList(),
+    open val status: String,
+    open val publishedDate: String,
+    open val closingDate: String,
+    open val dateAppended: String,
+    open val source: String,
+    open val tags: List<Tag> = emptyList(),
+    open val description: String? = null,
+    open val supportingDocs: List<SupportingDoc> = emptyList(),
 )
