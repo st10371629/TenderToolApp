@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!--    add perms to access api over the internet-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyAmplifyApp"
         android:allowBackup="true"

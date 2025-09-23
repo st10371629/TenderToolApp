@@ -69,9 +69,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="160dp" />
+                android:layout_marginTop="80dp" />
 
-        </LinearLayout>
+                <!--recycler for tender data-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/discoverRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingBottom="40dp" />
+
+            </LinearLayout>
     </ScrollView>
 
     <!-- Fixed bottom nav bar -->

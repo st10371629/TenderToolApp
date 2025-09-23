@@ -1,13 +1,15 @@
 package com.tendertool.app
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.LinearLayout
 import android.widget.TextView
+//import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.tendertool.app.src.NavBar
 
 class MainActivity : AppCompatActivity() {
+//    private val viewModel: TestViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login) // your big XML with fragmentContainer
@@ -41,18 +43,9 @@ class MainActivity : AppCompatActivity() {
             loginTab.setTextColor(Color.parseColor("#80FFFFFF"))
         }
 
-        val navSettings = findViewById<LinearLayout>(R.id.navSettings)
-        val navDiscover = findViewById<LinearLayout>(R.id.navDiscover)
+        NavBar.LoadNav(this) //passes through the current activity, and loads nav intents
 
-        navSettings.setOnClickListener {
-            val settingsIntent = Intent(this, SettingsActivity::class.java)
-            startActivity(settingsIntent)
-        }
+//        viewModel.testApi()
 
-        navDiscover.setOnClickListener {
-            val discoverIntent = Intent(this, DiscoverActivity::class.java)
-            startActivity(discoverIntent)
-        }
-
-        }
     }
+}

@@ -2,6 +2,7 @@ package com.tendertool.app
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.tendertool.app.src.NavBar
 
 class SettingsActivity : BaseActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -9,6 +10,6 @@ class SettingsActivity : BaseActivity()  {
         setContentView(R.layout.activity_setting)
 
         // attach nav bar listeners
-        setupNavBar()
+        NavBar.LoadNav(this)
     }
 }
