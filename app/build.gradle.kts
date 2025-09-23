@@ -45,4 +45,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    //Amplify Auth
+    implementation("com.amplifyframework:core:2.14.9")
+    implementation("com.amplifyframework:aws-auth-cognito:2.14.9")
 }
