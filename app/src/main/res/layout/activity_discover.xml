@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/app_background">
+
+    <!-- Top bar fragment container -->
+    <FrameLayout
+        android:id="@+id/topBarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        app:layout_collapseMode="pin"/>
 
     <!-- Scrollable content -->
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/navBar">
+        android:clipToPadding="false"
+        android:paddingTop="64dp"
+        android:paddingBottom="64dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="26dp">
 
             <!-- Header image -->
             <ImageView
                 android:id="@+id/headerImage"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:layout_marginTop="30dp"
-                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:src="@drawable/discovery_header" />
 
             <!-- Search + filter row -->
@@ -69,9 +81,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="80dp" />
+                android:layout_marginTop="80dp">
 
-                <!--recycler for tender data-->
+                <!-- RecyclerView for tender data -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/discoverRecycler"
                     android:layout_width="match_parent"
@@ -80,7 +92,8 @@
                     android:paddingBottom="40dp" />
 
             </LinearLayout>
-    </ScrollView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <!-- Fixed bottom nav bar -->
     <include
@@ -88,6 +101,6 @@
         layout="@layout/nav_bar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_gravity="bottom" />
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
