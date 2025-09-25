@@ -1,0 +1,32 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-tendertoolapp-dev-eedee-authRole",
+      "UnauthRoleArn": "arn:aws:iam::211635102441:role/amplify-tendertoolapp-dev-eedee-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::211635102441:role/amplify-tendertoolapp-dev-eedee-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-tendertoolapp-dev-eedee-deployment",
+      "UnauthRoleName": "amplify-tendertoolapp-dev-eedee-unauthRole",
+      "StackName": "amplify-tendertoolapp-dev-eedee",
+      "StackId": "arn:aws:cloudformation:us-east-1:211635102441:stack/amplify-tendertoolapp-dev-eedee/db80f5c0-9713-11f0-bb95-1226cd14b2f1",
+      "AmplifyAppId": "d191vp2mtu65hx"
+    },
+    "categories": {
+      "auth": {
+        "tendertoolapp63d3c23d": {
+          "userPoolId": "us-east-1_xGc6kefGg",
+          "userPoolName": "tenderuserinterfacerebc467e3_userpool_ebc467e3-dev",
+          "webClientId": "7tunbr3dsgv8a7ks0gadg81k5f",
+          "nativeClientId": "6t5pd001m5thq87eetheni2hct",
+          "identityPoolId": "us-east-1:b85a1f0e-c7bf-4abf-be7f-4683663cf381",
+          "identityPoolName": "tenderuserinterfacerebc467e3_identitypool_ebc467e3__dev",
+          "allowUnauthenticatedIdentities": false,
+          "authRoleArn": "arn:aws:iam::211635102441:role/amplify-tenderuserinterfacer-dev-24411-authRole",
+          "authRoleName": "amplify-tenderuserinterfacer-dev-24411-authRole",
+          "unauthRoleArn": "arn:aws:iam::211635102441:role/amplify-tenderuserinterfacer-dev-24411-unauthRole",
+          "unauthRoleName": "amplify-tenderuserinterfacer-dev-24411-unauthRole"
+        }
+      }
+    }
+  }
+}
