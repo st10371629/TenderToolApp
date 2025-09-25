@@ -28,4 +28,6 @@
     <string name="analytics">Settings</string>
     <string name="watchlist">Settings</string>
     <string name="search_for_tenders">Search for tenders...</string>
+    <string name="notifications" />
+    <string name="notification_icon" />
 </resources>
