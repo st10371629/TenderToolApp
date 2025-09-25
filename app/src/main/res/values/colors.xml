@@ -27,4 +27,15 @@
 
     <!-- divider line -->
     <color name="divider_color">#E0E0E0</color>
+
+    <!--Analytics page -->
+    <color name="analytics_card_background">#EBF2FA</color>
+    <color name="analytics_card_border">#D6E6F2</color>
+
+    <!-- Pie chart colours -->
+    <color name="pie_segment_dark_blue">@color/primary_dark_blue</color>
+    <color name="pie_segment_medium_blue">@color/primary_medium_blue</color>
+    <color name="pie_segment_yellow">@color/accent_yellow</color>
+    <color name="pie_segment_red">@color/accent_red</color>
+
 </resources>
