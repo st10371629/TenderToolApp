@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.amplifyframework.core.Amplify
 import com.tendertool.app.src.NavBar
 import kotlin.math.log
-import com.tendertool.app.src.NavBar
 import com.tendertool.app.src.TopBarFragment
 
 class SettingsActivity : BaseActivity()  {
