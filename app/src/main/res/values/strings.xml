@@ -30,5 +30,20 @@
     <string name="search_for_tenders">Search for tenders...</string>
     <string name="notifications" />
     <string name="notification_icon" />
+
+    <!-- analytics page -->
+    <string name="analytics_header_description">Analytics Header with decorative arrows</string>
+    <string name="analytics_daily_active_time_label">DAILY ACTIVE TIME</string>
+    <string name="analytics_daily_active_time_value">3 HRS</string>
+    <string name="analytics_tenders_searched_label">NO. OF TENDERS SEARCHED</string>
+    <string name="analytics_tenders_searched_value">18 TODAY</string>
+    <string name="analytics_popular_categories_label">YOUR POPULAR CATEGORIES</string>
+    <string name="analytics_key_label">KEY</string>
+    <string name="analytics_category_software">SOFTWARE &amp; APPLICATIONS</string>
+    <string name="analytics_category_it">IT SERVICES</string>
+    <string name="analytics_category_telecom">TELECOMMUNICATIONS</string>
+    <string name="analytics_category_consultancy">CONSULTANCY</string>
+
     <string name="bookmark" />
+
 </resources>
