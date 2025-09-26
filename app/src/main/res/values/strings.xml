@@ -30,4 +30,11 @@
     <string name="search_for_tenders">Search for tenders...</string>
     <string name="notifications" />
     <string name="notification_icon" />
+
+    <!-- watchlist -->
+    <string name="search_your_watchlist_hint">Search your watchlist...</string>
+    <string name="watchlist_header">Watchlist Header</string>
+    <string name="filter_button_description">Filter watchlist</string>
+    <string name="total_active_tenders">TOTAL ACTIVE TENDERS: 2</string>
+    <string name="closed_label">CLOSED</string>
 </resources>

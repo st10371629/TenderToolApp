@@ -27,4 +27,5 @@
 
     <!-- divider line -->
     <color name="divider_color">#E0E0E0</color>
+    <color name="text_hint_and_icon_grey">#757575</color>
 </resources>
