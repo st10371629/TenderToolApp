@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.amplifyframework.core.Amplify
@@ -60,13 +62,27 @@ class SettingsActivity : BaseActivity()  {
                 }
             )
         }
-        
+
         // Attach TopBarFragment to the container
         supportFragmentManager.beginTransaction()
             .replace(R.id.topBarContainer, TopBarFragment())
             .commit()
-            
+
         // attach nav bar listeners
         NavBar.LoadNav(this)
+
+        // Theme switch and text
+        val switchTheme = findViewById<Switch>(R.id.switch_theme)
+        val textThemeStatus = findViewById<TextView>(R.id.text_theme_status)
+        switchTheme.setOnCheckedChangeListener { _, isChecked ->
+            textThemeStatus.text = if (isChecked) "Dark" else "Light"
+        }
+
+        // Notifications switch and text
+        val switchNotifications = findViewById<Switch>(R.id.switch_notifications)
+        val textNotificationsStatus = findViewById<TextView>(R.id.text_notifications_status)
+        switchNotifications.setOnCheckedChangeListener { _, isChecked ->
+            textNotificationsStatus.text = if (isChecked) "On" else "Off"
+        }
     }
 }

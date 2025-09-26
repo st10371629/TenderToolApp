@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     android:background="@color/app_background">
 
-    <!-- Top bar fragment container -->
-    <FrameLayout
-        android:id="@+id/topBarContainer"
+    <!-- Top bar with AppBarLayout -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        app:layout_collapseMode="pin"/>
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+
+        <FrameLayout
+            android:id="@+id/topBarContainer"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            app:layout_scrollFlags="scroll|enterAlways" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Scrollable content -->
     <androidx.core.widget.NestedScrollView
@@ -19,7 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingTop="64dp"
         android:paddingBottom="64dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -81,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="80dp">
+                android:layout_marginTop="30dp">
 
                 <!-- RecyclerView for tender data -->
                 <androidx.recyclerview.widget.RecyclerView

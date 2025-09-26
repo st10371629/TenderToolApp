@@ -30,4 +30,5 @@
     <string name="search_for_tenders">Search for tenders...</string>
     <string name="notifications" />
     <string name="notification_icon" />
+    <string name="bookmark" />
 </resources>
