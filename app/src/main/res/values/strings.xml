@@ -43,4 +43,7 @@
     <string name="analytics_category_it">IT SERVICES</string>
     <string name="analytics_category_telecom">TELECOMMUNICATIONS</string>
     <string name="analytics_category_consultancy">CONSULTANCY</string>
+
+    <string name="bookmark" />
+
 </resources>

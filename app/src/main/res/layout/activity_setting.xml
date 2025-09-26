@@ -11,7 +11,7 @@
     <FrameLayout
         android:id="@+id/topBarContainer"
         android:layout_width="match_parent"
-        android:layout_height="64dp"/>
+        android:layout_height="64dp" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -41,127 +41,99 @@
                 android:text="@string/settings_section_general"
                 android:textColor="@color/text_input_grey"
                 android:textSize="14sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
-
-            <!-- language section -->
+            <!-- language section (Spinner) -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp">
 
-                <LinearLayout
-                    android:id="@+id/language_value"
+                <Spinner
+                    android:id="@+id/spinner_language"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/input_field_bg"
-                    android:gravity="center_vertical|end"
                     android:minWidth="150dp"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_language_value"
-                        android:textColor="@color/text_input_grey"
-                        android:textSize="16sp" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginStart="8dp"
-                        android:contentDescription="@string/settings_language"
-                        android:src="@drawable/ic_right" />
-
-
-                </LinearLayout>
-
+                    android:spinnerMode="dropdown"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/input_field_bg" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/language_value"
+                    android:layout_toStartOf="@id/spinner_language"
                     android:text="@string/settings_language"
                     android:textColor="@color/text_label_blue"
                     android:textSize="18sp" />
             </RelativeLayout>
 
-            <!-- theme section -->
+            <!-- theme section (Switch) -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="12dp">
-                <LinearLayout
-                    android:id="@+id/theme_value"
+
+                <Switch
+                    android:id="@+id/switch_theme"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/input_field_bg"
-                    android:gravity="center_vertical|end"
-                    android:minWidth="150dp"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_theme_value"
-                        android:textColor="@color/text_input_grey"
-                        android:textSize="16sp" />
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginStart="8dp"
-                        android:contentDescription="@string/settings_theme"
-                        android:src="@drawable/ic_sun" />
-                </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <TextView
+                    android:id="@+id/text_theme_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/switch_theme"
+                    android:layout_centerVertical="true"
+                    android:text="Light"
+                    android:textColor="@color/text_input_grey"
+                    android:textSize="16sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/theme_value"
                     android:text="@string/settings_theme"
                     android:textColor="@color/text_label_blue"
                     android:textSize="18sp" />
             </RelativeLayout>
 
-            <!-- notifications section -->
+            <!-- notifications section (Switch) -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="12dp">
-                <LinearLayout
-                    android:id="@+id/notifications_value"
+
+                <Switch
+                    android:id="@+id/switch_notifications"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/input_field_bg"
-                    android:gravity="center_vertical|end"
-                    android:minWidth="150dp"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_notifications_value"
-                        android:textColor="@color/text_input_grey"
-                        android:textSize="16sp" />
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginStart="8dp"
-                        android:contentDescription="@string/settings_notifications"
-                        android:src="@drawable/ic_email" />
-                </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <TextView
+                    android:id="@+id/text_notifications_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/switch_notifications"
+                    android:layout_centerVertical="true"
+                    android:text="Off"
+                    android:textColor="@color/text_input_grey"
+                    android:textSize="16sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/notifications_value"
                     android:text="@string/settings_notifications"
                     android:textColor="@color/text_label_blue"
                     android:textSize="18sp" />
@@ -181,15 +153,7 @@
                 android:text="@string/settings_section_profile"
                 android:textColor="@color/text_input_grey"
                 android:textSize="14sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="12dp"
-                android:text="@string/settings_edit_profile"
-                android:textColor="@color/text_profile_options"
-                android:textSize="18sp" />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -203,6 +167,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="6dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -210,6 +175,7 @@
                     android:text="@string/settings_biometric_login"
                     android:textColor="@color/text_profile_options"
                     android:textSize="18sp" />
+
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -228,13 +194,13 @@
                 android:textColor="@color/logout_button_text"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:stateListAnimator="@null"/>
-
+                android:stateListAnimator="@null" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
     <include
         layout="@layout/nav_bar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:layout_gravity="bottom"/>
+        android:layout_gravity="bottom" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
