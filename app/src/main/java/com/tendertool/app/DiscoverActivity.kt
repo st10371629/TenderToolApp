@@ -1,6 +1,8 @@
 package com.tendertool.app
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,7 @@ class DiscoverActivity : BaseActivity() {
     //private variables
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: DiscoverAdapter
+    private lateinit var spinner: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,23 +36,29 @@ class DiscoverActivity : BaseActivity() {
         adapter = DiscoverAdapter(emptyList())
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+        spinner = findViewById(R.id.loadingSpinner)
+
+        // Show spinner before fetching data
+        spinner.visibility = View.VISIBLE
 
         //fetch data from the API
         fetchTenders()
     }
 
-    private fun fetchTenders()
-    {
-        lifecycleScope.launch{
-            try
-            {
-                val api = Retrofit.api //retrofit instance
+    private fun fetchTenders() {
+        lifecycleScope.launch {
+            try {
+                val api = Retrofit.api // retrofit instance
                 val tenders: List<BaseTender> = api.fetchTenders()
+
+                // update RecyclerView
                 adapter.updateData(tenders)
-            }
-            catch (e: Exception)
-            {
+
+                // hide spinner once data is loaded
+                spinner.visibility = View.GONE
+            } catch (e: Exception) {
                 e.printStackTrace()
+                spinner.visibility = View.GONE // hide even on error
             }
         }
     }
