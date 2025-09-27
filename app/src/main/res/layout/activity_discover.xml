@@ -110,6 +110,11 @@
         android:indeterminateTint="@color/primary_dark_blue"
         android:visibility="gone" />
 
+    <include
+        android:id="@+id/filterOverlay"
+        layout="@layout/filter_overlay"
+        android:visibility="gone" />
+
     <!-- Fixed bottom nav bar -->
     <include
         android:id="@+id/navBar"

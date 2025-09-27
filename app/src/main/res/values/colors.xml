@@ -47,4 +47,8 @@
     <color name="switch_track_on">@color/primary_medium_blue</color>
     <color name="switch_track_off">#BDBDBD</color>
 
+    <!-- filter overlay buttons -->
+    <color name="grey">#B0B0B0</color>
+    <color name="red">#D32F2F</color>
+
 </resources>
