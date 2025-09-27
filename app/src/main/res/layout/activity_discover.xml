@@ -100,6 +100,21 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- Loading Spinner -->
+    <ProgressBar
+        android:id="@+id/loadingSpinner"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/primary_dark_blue"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/filterOverlay"
+        layout="@layout/filter_overlay"
+        android:visibility="gone" />
+
     <!-- Fixed bottom nav bar -->
     <include
         android:id="@+id/navBar"
