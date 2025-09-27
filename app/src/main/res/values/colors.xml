@@ -26,6 +26,7 @@
 
     <!-- divider line -->
     <color name="divider_color">#E0E0E0</color>
+    <color name="text_hint_and_icon_grey">#757575</color>
 
     <!--Analytics page -->
     <color name="analytics_card_background">#EBF2FA</color>
@@ -45,4 +46,5 @@
     <color name="switch_thumb_off">@color/input_field_border</color>
     <color name="switch_track_on">@color/primary_medium_blue</color>
     <color name="switch_track_off">#BDBDBD</color>
+
 </resources>
