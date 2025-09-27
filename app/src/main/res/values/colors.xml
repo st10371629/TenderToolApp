@@ -8,7 +8,6 @@
     <color name="accent_red">#CD4F6E</color>
     <color name="accent_yellow">#FCF8AE</color>
 
-
     <color name="toolbar_blue">@color/primary_dark_blue</color>
     <color name="app_background">@color/white</color>
 
@@ -28,4 +27,24 @@
     <!-- divider line -->
     <color name="divider_color">#E0E0E0</color>
     <color name="text_hint_and_icon_grey">#757575</color>
+
+    <!--Analytics page -->
+    <color name="analytics_card_background">#EBF2FA</color>
+    <color name="analytics_card_border">#D6E6F2</color>
+
+    <!-- Pie chart colours -->
+    <color name="pie_segment_dark_blue">@color/primary_dark_blue</color>
+    <color name="pie_segment_medium_blue">@color/primary_medium_blue</color>
+    <color name="pie_segment_yellow">@color/accent_yellow</color>
+    <color name="pie_segment_red">@color/accent_red</color>
+
+    <color name="tender_card">#EFF8FF</color>
+    <color name="tender_card_stroke">#D6E5F1</color>
+
+    <!-- switch / toggle colours -->
+    <color name="switch_thumb_on">@color/primary_dark_blue</color>
+    <color name="switch_thumb_off">@color/input_field_border</color>
+    <color name="switch_track_on">@color/primary_medium_blue</color>
+    <color name="switch_track_off">#BDBDBD</color>
+
 </resources>
