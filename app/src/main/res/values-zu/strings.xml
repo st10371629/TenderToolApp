@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Tender Tool</string>
+    <string name="settings_header_description">Ikhanda lezilungiselelo elinemishini enhle</string>
+    <!-- settings page titles -->
+    <string name="settings_title">Izilungiselelo</string>
+    <string name="settings_section_general">JIKELELE</string>
+    <string name="settings_section_profile">IPHROFAYILI</string>
+
+    <!-- general settings options -->
+    <string name="settings_language">Ulimi</string>
+    <string name="settings_language_value">IsiNgisi (ZA)</string>
+    <string name="settings_theme">Isitayela</string>
+    <string name="theme_light">Khanya</string>
+    <string name="theme_dark">Mnyama</string>
+    <string name="settings_notifications">Izaziso</string>
+    <string name="settings_notifications_value">I-imeyili</string>
+    <string name="notifications_on">Vula</string>
+    <string name="notifications_off">Cisha</string>
+
+    <!-- profile settings options -->
+    <string name="settings_edit_profile">Hlela Iphrofayili</string>
+    <string name="settings_change_password">Shintsha Iphasiwedi</string>
+    <string name="settings_biometric_login">Ukungena nge-Biometric</string>
+
+    <!-- buttons -->
+    <string name="settings_logout">PHUMA</string>
+
+    <!-- nav bar headings -->
+    <string name="settings">Izilungiselelo</string>
+    <string name="discover">Thola</string>
+    <string name="analytics">Ukuhlaziya</string>
+    <string name="watchlist">Uhlu Lokubuka</string>
+    <string name="search_for_tenders">Sesha ama-tender...</string>
+    <string name="notifications" />
+    <string name="notification_icon" />
+
+    <!-- watchlist -->
+    <string name="search_your_watchlist_hint">Sesha uhlu lwakho lokubuka...</string>
+    <string name="watchlist_header">Ikhanda Lohlu Lokubuka</string>
+    <string name="filter_button_description">Hlunga uhlu lokubuka</string>
+    <string name="total_active_tenders">AMA-TENDER AKHONA: 2</string>
+    <string name="closed_label">VALIWE</string>
+
+    <!-- analytics page -->
+    <string name="analytics_header_description">Ikhanda Lokuhlaziya elinemicibisholo enhle</string>
+    <string name="analytics_daily_active_time_label">ISIKHATHI ESISEBENZAYO NSUKU NGESI NSUKU</string>
+    <string name="analytics_daily_active_time_value">3 IYURE</string>
+    <string name="analytics_tenders_searched_label">INANI LAMA-TENDERS AFAKIWE</string>
+    <string name="analytics_tenders_searched_value">18 NAMUHLA</string>
+    <string name="analytics_popular_categories_label">IZIGABA OZIDUMILE</string>
+    <string name="analytics_key_label">UKHIYI</string>
+    <string name="analytics_category_software">ISOFTWARE &amp; IZINHLELO</string>
+    <string name="analytics_category_it">IZINSIZA ZE-IT</string>
+    <string name="analytics_category_telecom">UKUXHUMANA NGOTHELEKILE</string>
+    <string name="analytics_category_consultancy">UBUCHWEPHESHE</string>
+
+    <string name="bookmark" />
+
+    <string-array name="language_options">
+        <item>IsiNgisi</item>
+        <item>IsiBhunu</item>
+        <item>IsiZulu</item>
+    </string-array>
+</resources>

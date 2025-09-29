@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Tender Tool</string>
     <string name="settings_header_description">Settings header with decorative gears</string>
+
     <!-- settings page titles -->
     <string name="settings_title">Settings</string>
     <string name="settings_section_general">GENERAL</string>
@@ -10,9 +11,12 @@
     <string name="settings_language">Language</string>
     <string name="settings_language_value">English (ZA) </string>
     <string name="settings_theme">Theme</string>
-    <string name="settings_theme_value">Light</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
     <string name="settings_notifications">Notifications</string>
     <string name="settings_notifications_value">Email</string>
+    <string name="notifications_on" />
+    <string name="notifications_off">Off</string>
 
     <!-- profile settings pptions -->
     <string name="settings_edit_profile">Edit Profile</string>
@@ -28,8 +32,8 @@
     <string name="analytics">Settings</string>
     <string name="watchlist">Settings</string>
     <string name="search_for_tenders">Search for tenders...</string>
-    <string name="notifications" />
-    <string name="notification_icon" />
+    <string name="notifications" translatable="false" />
+    <string name="notification_icon" translatable="false" />
 
     <!-- watchlist -->
     <string name="search_your_watchlist_hint">Search your watchlist...</string>
@@ -51,6 +55,12 @@
     <string name="analytics_category_telecom">TELECOMMUNICATIONS</string>
     <string name="analytics_category_consultancy">CONSULTANCY</string>
 
-    <string name="bookmark" />
+    <string name="bookmark" translatable="false" />
+
+    <string-array name="language_options">
+        <item>English</item>
+        <item>Afrikaans</item>
+        <item>Zulu</item>
+    </string-array>
 
 </resources>

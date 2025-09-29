@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Tender Tool</string>
+    <string name="settings_header_description">Instellingskop met dekoratiewe ratte</string>
+    <!-- settings page titles -->
+    <string name="settings_title">Instellings</string>
+    <string name="settings_section_general">ALGEMEEN</string>
+    <string name="settings_section_profile">PROFIEL</string>
+
+    <!-- general settings options -->
+    <string name="settings_language">Taal</string>
+    <string name="settings_language_value">Engels (ZA)</string>
+    <string name="settings_theme">Tema</string>
+    <string name="theme_light">Lig</string>
+    <string name="theme_dark">Donker</string>
+    <string name="settings_notifications">Kennisgewings</string>
+    <string name="settings_notifications_value">E-pos</string>
+    <string name="notifications_on">Aan</string>
+    <string name="notifications_off">Af</string>
+
+    <!-- profile settings options -->
+    <string name="settings_edit_profile">Wysig Profiel</string>
+    <string name="settings_change_password">Verander Wagwoord</string>
+    <string name="settings_biometric_login">Biometriese Aanmelding</string>
+
+    <!-- buttons -->
+    <string name="settings_logout">MELD AF</string>
+
+    <!-- nav bar headings -->
+    <string name="settings">Instellings</string>
+    <string name="discover">Ontdek</string>
+    <string name="analytics">Analise</string>
+    <string name="watchlist">Waarnemingslys</string>
+    <string name="search_for_tenders">Soek tenders...</string>
+    <string name="notifications" />
+    <string name="notification_icon" />
+
+    <!-- watchlist -->
+    <string name="search_your_watchlist_hint">Soek jou waarnemingslys...</string>
+    <string name="watchlist_header">Waarnemingslyskop</string>
+    <string name="filter_button_description">Filter waarnemingslys</string>
+    <string name="total_active_tenders">TOTALE AKTIEWE TENDERS: 2</string>
+    <string name="closed_label">GESLUIT</string>
+
+    <!-- analytics page -->
+    <string name="analytics_header_description">Analise-kop met dekoratiewe pyls</string>
+    <string name="analytics_daily_active_time_label">DAAGLIKSE AKTIEWE TYD</string>
+    <string name="analytics_daily_active_time_value">3 URE</string>
+    <string name="analytics_tenders_searched_label">AANTAL GESOEKDE TENDERS</string>
+    <string name="analytics_tenders_searched_value">18 VANDAG</string>
+    <string name="analytics_popular_categories_label">JOU POPULÊRE KATEGORIEË</string>
+    <string name="analytics_key_label">SLEUTEL</string>
+    <string name="analytics_category_software">SAGTEWARE &amp; APPLIKASIES</string>
+    <string name="analytics_category_it">IT DIENSTE</string>
+    <string name="analytics_category_telecom">TELEKOMMUNIKASIE</string>
+    <string name="analytics_category_consultancy">KONSULTASIE</string>
+
+    <string name="bookmark" />
+
+    <string-array name="language_options">
+        <item>Engels</item>
+        <item>Afrikaans</item>
+        <item>Zulu</item>
+    </string-array>
+</resources>

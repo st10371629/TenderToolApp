@@ -46,16 +46,17 @@
             <!-- language section (Spinner) -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp">
+                android:layout_height="45dp">
 
                 <Spinner
                     android:id="@+id/spinner_language"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:minWidth="150dp"
+                    android:minWidth="140dp"
                     android:spinnerMode="dropdown"
                     android:paddingHorizontal="16dp"
+                    android:entries="@array/language_options"
                     android:background="@drawable/input_field_bg" />
 
                 <TextView
