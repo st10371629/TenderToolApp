@@ -8,17 +8,17 @@
     tools:context=".WatchlistActivity">
 
     <!-- Top bar -->
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="&lt;/androidx.coordinatorlayout.widget.CoordinatorLayout>" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="&lt;/androidx.coordinatorlayout.widget.CoordinatorLayout>" />-->
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="&lt;/androidx.coordinatorlayout.widget.CoordinatorLayout>" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="&lt;/androidx.coordinatorlayout.widget.CoordinatorLayout>" />-->
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -134,6 +134,7 @@
 
                 <!-- Total Active Tenders Bar -->
                 <TextView
+                    android:id="@+id/TotalTenders"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/total_tenders_bar_bg"
@@ -142,6 +143,39 @@
                     android:text="@string/total_active_tenders"
                     android:textColor="@color/text_label_blue"
                     android:textStyle="bold" />
+
+                <!-- Scrollable card container -->
+                <LinearLayout
+                    android:id="@+id/cardContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp">
+
+                    <!-- RecyclerView for tender data -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/watchlistRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingBottom="40dp" />
+
+                </LinearLayout>
+
+                <!-- Loading Spinner -->
+                <ProgressBar
+                    android:id="@+id/loadingSpinner"
+                    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/primary_dark_blue"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/filterOverlay"
+                    layout="@layout/filter_overlay"
+                    android:visibility="gone" />
 
                 <!-- Closed Divider -->
                 <RelativeLayout
