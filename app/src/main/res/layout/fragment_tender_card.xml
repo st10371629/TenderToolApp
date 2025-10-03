@@ -20,7 +20,7 @@
             android:text="Lorem ipsum dolor sit amet, consectetur"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:textColor="@color/primary_dark_blue" />
+            android:textColor="@color/text_label_blue" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_location"
-                app:tint="@color/primary_dark_blue" />
+                app:tint="@color/text_hint_and_icon_grey" />
 
             <TextView
                 android:id="@+id/locationText"
@@ -55,7 +55,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_time"
-                app:tint="@color/primary_dark_blue" />
+                app:tint="@color/text_hint_and_icon_grey" />
 
             <TextView
                 android:id="@+id/closingDateText"
@@ -81,6 +81,7 @@
                 android:text="Lorem ipsum dolor sit amet"
                 android:layout_marginStart="4dp"
                 android:textSize="14sp" />
+
         </LinearLayout>
     </LinearLayout>
 

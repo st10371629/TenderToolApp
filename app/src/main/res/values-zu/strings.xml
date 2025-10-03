@@ -28,8 +28,9 @@
     <!-- nav bar headings -->
     <string name="settings">Izilungiselelo</string>
     <string name="discover">Thola</string>
-    <string name="analytics">Ukuhlaziya</string>
+    <string name="analytics">Ukuhlaziywa</string>
     <string name="watchlist">Uhlu Lokubuka</string>
+
     <string name="search_for_tenders">Sesha ama-tender...</string>
     <string name="notifications" />
     <string name="notification_icon" />

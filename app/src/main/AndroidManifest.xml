@@ -5,6 +5,10 @@
     <!--    add perms to access api over the internet-->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- allow reading app usage statistics (needs manual grant by user) -->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
     <application
         android:name=".MyAmplifyApp"
         android:allowBackup="true"

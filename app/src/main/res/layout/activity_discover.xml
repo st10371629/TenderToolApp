@@ -51,14 +51,48 @@
                 android:layout_marginTop="-82dp"
                 android:padding="13dp">
 
-                <EditText
-                    android:id="@+id/searchField"
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:layout_weight="1"
-                    android:background="@drawable/card_background"
-                    android:hint="@string/search_for_tenders"
-                    android:padding="8dp" />
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/card_background">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/card_background"
+                        android:paddingHorizontal="12dp"
+                        android:gravity="center_vertical">
+
+                        <!-- Search Icon -->
+                        <ImageView
+                            android:id="@+id/search_icon"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentStart="true"
+                            android:src="@drawable/ic_search"
+                            app:tint="@color/text_hint_and_icon_grey"
+                            android:contentDescription="@string/search_for_tenders" />
+
+                        <!-- Search Field -->
+                        <EditText
+                            android:id="@+id/searchField"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/search_icon"
+                            android:layout_marginStart="8dp"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/search_for_tenders"
+                            android:paddingVertical="8dp"
+                            android:textColorHint="@color/text_hint_and_icon_grey"
+                            android:textSize="16sp"
+                            android:importantForAutofill="no"
+                            android:inputType="text" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
                 <ImageButton
                     android:id="@+id/filterButton"
@@ -69,6 +103,7 @@
                     android:layout_marginStart="8dp"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
+                    app:tint="@color/text_label_blue"
                     android:padding="8dp" />
             </LinearLayout>
 

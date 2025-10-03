@@ -31,6 +31,13 @@ class SettingsActivity : BaseActivity() {
     private val KEY_LANGUAGE = "app_language"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // Load theme setting before view inflation
+        prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val darkModeEnabled = prefs.getBoolean("dark_mode_enabled", false)
+        val mode = if (darkModeEnabled) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        AppCompatDelegate.setDefaultNightMode(mode)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
 
@@ -94,10 +101,23 @@ class SettingsActivity : BaseActivity() {
         val switchTheme = findViewById<Switch>(R.id.switch_theme)
         val textThemeStatus = findViewById<TextView>(R.id.text_theme_status)
 
+        // Load current theme mode from preferences
+        val currentNightMode = AppCompatDelegate.getDefaultNightMode()
+        val isDarkMode = currentNightMode == AppCompatDelegate.MODE_NIGHT_YES
+        switchTheme.isChecked = isDarkMode
+        textThemeStatus.text = if (isDarkMode) getString(R.string.theme_dark) else getString(R.string.theme_light)
+
         switchTheme.setOnCheckedChangeListener { _, isChecked ->
-            val lightText = getString(R.string.theme_light) // from strings.xml
-            val darkText = getString(R.string.theme_dark)   // from strings.xml
+            val lightText = getString(R.string.theme_light)
+            val darkText = getString(R.string.theme_dark)
             textThemeStatus.text = if (isChecked) darkText else lightText
+
+            // Actually apply the theme
+            val newMode = if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            AppCompatDelegate.setDefaultNightMode(newMode)
+
+            // Save preference
+            prefs.edit().putBoolean("dark_mode_enabled", isChecked).apply()
         }
 
         // Notifications switch and text

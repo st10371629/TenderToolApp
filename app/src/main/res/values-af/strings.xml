@@ -28,8 +28,9 @@
     <!-- nav bar headings -->
     <string name="settings">Instellings</string>
     <string name="discover">Ontdek</string>
-    <string name="analytics">Analise</string>
-    <string name="watchlist">Waarnemingslys</string>
+    <string name="analytics">Analitiese Data</string>
+    <string name="watchlist">Kyklys</string>
+
     <string name="search_for_tenders">Soek tenders...</string>
     <string name="notifications" />
     <string name="notification_icon" />

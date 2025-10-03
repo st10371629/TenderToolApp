@@ -28,9 +28,10 @@
 
     <!-- nav bar headings -->
     <string name="settings">Settings</string>
-    <string name="discover">Settings</string>
-    <string name="analytics">Settings</string>
-    <string name="watchlist">Settings</string>
+    <string name="discover">Discover</string>
+    <string name="analytics">Analytics</string>
+    <string name="watchlist">Watchlist</string>
+
     <string name="search_for_tenders">Search for tenders...</string>
     <string name="notifications" translatable="false" />
     <string name="notification_icon" translatable="false" />
