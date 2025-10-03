@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Main background for all screens -->
+    <color name="app_background">#20293E</color>
+
+    <!-- Headers,toolbars, and cards -->
+    <color name="toolbar_blue">#2A344B</color>
+    <color name="input_field_background">#2A344B</color>
+    <color name="analytics_card_background">#2A344B</color>
+    <color name="total_tenders_bar_bg">#2A344B</color>
+    <color name="card_background">#2A344B</color>
+
+    <!-- Borders and dividers -->
+    <color name="input_field_border">#5571A6</color>
+    <color name="analytics_card_border">#5571A6</color>
+    <color name="divider_color">#2A344B</color>
+
+    <!-- Text and icons -->
+    <color name="text_label_blue">@color/white</color>
+    <color name="text_profile_options">@color/white</color>
+    <color name="text_input_grey">#A6A6A6</color>
+    <color name="text_hint_and_icon_grey">#A6A6A6</color>
+
+    <!-- Logout button  -->
+    <color name="logout_button_background">#2A344B</color>
+    <color name="logout_button_text">@color/accent_red</color>
+
+
+</resources>
