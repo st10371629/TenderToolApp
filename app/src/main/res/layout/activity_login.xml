@@ -3,15 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- background -->
+    <!-- Background Image -->
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/background"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:contentDescription="Background" />
 
-    <!-- container -->
+    <!-- Scrollable container -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,55 +26,74 @@
             android:animateLayoutChanges="true"
             android:gravity="center_horizontal">
 
-            <!-- card -->
+            <!-- Card container -->
             <FrameLayout
                 android:id="@+id/fragmentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="200dp"
-                android:animateLayoutChanges="true"
                 android:background="@drawable/login_card_bg"
-                android:elevation="6dp"
-                android:padding="15dp">
+                android:elevation="8dp"
+                android:padding="24dp"
+                android:clipToOutline="true">
 
-                <!-- tabs -->
-                <LinearLayout
+                <!-- Tabs with indicator -->
+                <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:paddingBottom="15dp">
+                    android:layout_gravity="center_horizontal">
 
-                    <TextView
-                        android:id="@+id/loginTab"
+                    <!-- Tabs -->
+                    <LinearLayout
+                        android:id="@+id/tabContainer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="Login"
-                        android:textColor="#FFFFFF"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/registerTab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Register"
-                        android:textColor="#80FFFFFF"
-                        android:textSize="20sp" />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/loginTab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="40dp"
+                            android:text="Login"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:paddingBottom="4dp" />
 
-                <!-- fragment gets swapped in here -->
+                        <TextView
+                            android:id="@+id/registerTab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Register"
+                            android:textColor="#80FFFFFF"
+                            android:textSize="24sp"
+                            android:paddingBottom="4dp" />
+                    </LinearLayout>
+
+                    <!-- Indicator -->
+                    <View
+                        android:id="@+id/tabIndicator"
+                        android:layout_width="60dp"
+                        android:layout_height="2dp"
+                        android:layout_gravity="bottom|start"
+                        android:background="#FFFFFF"
+                        android:layout_marginTop="40dp"
+                        android:translationX="0dp" />
+                </FrameLayout>
+
+                <!-- Fragment container for forms -->
                 <FrameLayout
                     android:id="@+id/formContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="60dp" />
+                    android:layout_marginTop="24dp" />
 
             </FrameLayout>
         </LinearLayout>
     </ScrollView>
+
+    <!-- Bottom navigation -->
     <include
         layout="@layout/nav_bar"
         android:layout_width="match_parent"

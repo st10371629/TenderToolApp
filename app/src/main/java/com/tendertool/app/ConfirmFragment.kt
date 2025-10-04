@@ -28,6 +28,9 @@ class ConfirmFragment : Fragment() {
         val confirmationCodeInput = view.findViewById<EditText>(R.id.confirmationCodeInput)
         val confirmButton = view.findViewById<AppCompatButton>(R.id.confirmSignUpButton)
 
+        // Pre-fill username if passed from RegisterFragment
+        arguments?.getString("USERNAME")?.let { usernameInput.setText(it) }
+
         confirmButton.setOnClickListener {
             val username = usernameInput.text.toString()
             val code = confirmationCodeInput.text.toString()
@@ -46,9 +49,11 @@ class ConfirmFragment : Fragment() {
                     // This is a background thread. Switch to the main thread for UI changes.
                     activity?.runOnUiThread {
                         Toast.makeText(context, "Confirmation successful! You can now log in.", Toast.LENGTH_LONG).show()
-                        // TODO: Navigate to your Login Fragment from here.
-                        // Example with Navigation Component:
-                        // findNavController().navigate(R.id.action_confirmFragment_to_loginFragment)
+
+                        // Navigate back to LoginFragment
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.formContainer, LoginFragment())
+                            .commit()
                     }
                 },
                 { error ->

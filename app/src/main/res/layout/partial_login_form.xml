@@ -4,7 +4,6 @@
     android:orientation="vertical"
     android:padding="24dp">
 
-
     <!-- username -->
     <TextView
         android:id="@+id/textViewUsername"
@@ -39,19 +38,35 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/passwordInput"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:background="@drawable/input_bg"
-        android:fontFamily="@font/poppinsregular"
-        android:hint="Enter password"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:textColorHint="#809A9A9A" />
+        android:background="@drawable/input_bg">
 
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsregular"
+            android:hint="Enter password"
+            android:background="@drawable/button_bg"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:paddingEnd="48dp"
+            android:textColor="#000000"
+            android:textColorHint="#809A9A9A" />
+
+        <ImageView
+            android:id="@+id/passwordToggle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_eye_on"
+            android:contentDescription="Toggle password visibility" />
+    </RelativeLayout>
 
     <!-- confirm button -->
     <androidx.appcompat.widget.AppCompatButton
@@ -66,4 +81,5 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:stateListAnimator="@null" />
+
 </LinearLayout>

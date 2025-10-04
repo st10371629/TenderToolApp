@@ -57,6 +57,8 @@
     <string name="analytics_category_consultancy">CONSULTANCY</string>
 
     <string name="bookmark" translatable="false" />
+    <string name="the_username_you_registered_with">The username you registered with</string>
+    <string name="username">Username</string>
 
     <string-array name="language_options">
         <item>English</item>

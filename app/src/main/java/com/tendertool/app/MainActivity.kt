@@ -1,9 +1,11 @@
 package com.tendertool.app
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 //import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -38,23 +40,35 @@ class MainActivity : AppCompatActivity() {
                         // find tabs
                         val loginTab: TextView = findViewById(R.id.loginTab)
                         val registerTab: TextView = findViewById(R.id.registerTab)
+                        val indicator: View = findViewById(R.id.tabIndicator)
 
-                        // when Login tab is clicked
+                        // Animate indicator to target X position
+                        fun moveIndicatorTo(targetTab: TextView) {
+                            ObjectAnimator.ofFloat(indicator, "translationX", targetTab.x).apply {
+                                duration = 200
+                                start()
+                            }
+                        }
+
+                        // Set default indicator position under login tab
+                        indicator.post { moveIndicatorTo(loginTab) }
+
                         loginTab.setOnClickListener {
                             supportFragmentManager.beginTransaction()
                                 .replace(R.id.formContainer, LoginFragment())
                                 .commit()
                             loginTab.setTextColor(Color.WHITE)
                             registerTab.setTextColor(Color.parseColor("#80FFFFFF"))
+                            moveIndicatorTo(loginTab)
                         }
 
-                        // when Register tab is clicked
                         registerTab.setOnClickListener {
                             supportFragmentManager.beginTransaction()
                                 .replace(R.id.formContainer, RegisterFragment())
                                 .commit()
                             registerTab.setTextColor(Color.WHITE)
                             loginTab.setTextColor(Color.parseColor("#80FFFFFF"))
+                            moveIndicatorTo(registerTab)
                         }
 
                         NavBar.LoadNav(this) //passes through the current activity, and loads nav intents
