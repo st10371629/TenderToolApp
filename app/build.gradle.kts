@@ -50,8 +50,9 @@ dependencies {
     //Amplify Auth
     implementation("com.amplifyframework:core:2.14.9")
     implementation("com.amplifyframework:aws-auth-cognito:2.14.9")
-
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    //Google Sign in
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
 
     //config retrofit dependencies
     implementation("com.squareup.retrofit2:retrofit:2.11.0")

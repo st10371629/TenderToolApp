@@ -11,6 +11,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.auth.AuthProvider
+import com.google.android.gms.common.SignInButton
 
 class LoginFragment : Fragment() {
     override fun onCreateView(
@@ -27,6 +29,7 @@ class LoginFragment : Fragment() {
         val usernameInput = view.findViewById<EditText>(R.id.usernameInput)
         val passwordInput = view.findViewById<EditText>(R.id.passwordInput)
         val loginButton = view.findViewById<AppCompatButton>(R.id.confirmButton)
+        val googleSignInButton = view.findViewById<SignInButton>(R.id.googleSignInButton)
 
         // Set a click listener on the login button
         loginButton.setOnClickListener {
@@ -66,5 +69,27 @@ class LoginFragment : Fragment() {
                 }
             )
         }
+
+        // --- Google Sign-In ---
+        googleSignInButton.setOnClickListener {
+            Amplify.Auth.signInWithSocialWebUI(
+                AuthProvider.google(), // Use the imported AuthProvider
+                requireActivity(),
+                { result ->
+                    Log.i("AmplifyLogin", "Google sign in successful: $result")
+                    activity?.runOnUiThread {
+                        Toast.makeText(context, "Sign in successful!", Toast.LENGTH_SHORT).show()
+                        // TODO: Navigate to DiscoverActivity
+                    }
+                },
+                { error ->
+                    Log.e("AmplifyLogin", "Google sign in failed", error)
+                    activity?.runOnUiThread {
+                        Toast.makeText(context, "Sign in failed: ${error.cause?.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
+            )
+        }
     }
 }
+
