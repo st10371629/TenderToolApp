@@ -82,4 +82,12 @@
         android:textSize="18sp"
         android:stateListAnimator="@null" />
 
+    <!-- Google Sign-In Image Button -->
+    <ImageView
+        android:id="@+id/googleSignInImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/google_signin" /> <!-- Replace with your image asset name -->
+
 </LinearLayout>

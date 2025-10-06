@@ -94,5 +94,11 @@ class LoginFragment : Fragment() {
                 }
             )
         }
+
+        //google sso
+        val googleSignInImage = view.findViewById<ImageView>(R.id.googleSignInImage)
+        googleSignInImage.setOnClickListener {
+            val sheet = GoogleSignInSheet()
+            sheet.show(parentFragmentManager, "GoogleSignInSheet") }
     }
 }
