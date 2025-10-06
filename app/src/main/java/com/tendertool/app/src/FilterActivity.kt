@@ -3,10 +3,12 @@ package com.tendertool.app
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.tendertool.app.src.ThemeHelper
 
 class FilterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeHelper.applySavedTheme(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.filter_overlay)
 

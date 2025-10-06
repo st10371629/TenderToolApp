@@ -4,14 +4,14 @@
     android:padding="24dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/app_background">
 
     <!-- Closing date filter -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Closing Date"
-        android:textColor="@color/primary_dark_blue"
+        android:textColor="@color/text_label_blue"
         android:textSize="16sp"
         android:textStyle="bold"/>
 
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/primary_dark_blue"
-            android:textColor="@android:color/black"/>
+            android:textColor="@color/text_label_blue"/>
 
         <RadioButton
             android:id="@+id/closing1Month"
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/primary_dark_blue"
-            android:textColor="@android:color/black"/>
+            android:textColor="@color/text_label_blue"/>
 
         <RadioButton
             android:id="@+id/closing3Months"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/primary_dark_blue"
-            android:textColor="@android:color/black"/>
+            android:textColor="@color/text_label_blue"/>
     </RadioGroup>
 
     <!-- Alphabetical order -->
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:text="Sort By"
         android:layout_marginTop="16dp"
-        android:textColor="@color/primary_dark_blue"
+        android:textColor="@color/text_label_blue"
         android:textSize="16sp"
         android:textStyle="bold"/>
 
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/primary_dark_blue"
-            android:textColor="@android:color/black"/>
+            android:textColor="@color/text_label_blue"/>
 
         <RadioButton
             android:id="@+id/alphabetDesc"
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/primary_dark_blue"
-            android:textColor="@android:color/black"/>
+            android:textColor="@color/text_label_blue"/>
     </RadioGroup>
 
     <!-- Source filter -->
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:text="Source"
         android:layout_marginTop="16dp"
-        android:textColor="@color/primary_dark_blue"
+        android:textColor="@color/text_label_blue"
         android:textSize="16sp"
         android:textStyle="bold"/>
 
@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:buttonTint="@color/primary_dark_blue"
-        android:textColor="@android:color/black"/>
+        android:textColor="@color/text_label_blue"/>
 
     <CheckBox
         android:id="@+id/sourceEtenders"
@@ -103,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:buttonTint="@color/primary_dark_blue"
-        android:textColor="@android:color/black"/>
+        android:textColor="@color/text_label_blue"/>
 
     <!-- Buttons -->
     <LinearLayout
@@ -132,7 +132,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/grey"
+            android:backgroundTint="@color/text_hint_and_icon_grey"
             android:textColor="@android:color/white" />
 
         <Button

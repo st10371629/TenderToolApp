@@ -11,11 +11,16 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.amplifyframework.core.Amplify
 import com.tendertool.app.src.NavBar
+import com.tendertool.app.src.ThemeHelper
 
 class MainActivity : AppCompatActivity() {
 //    private val viewModel: TestViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // Apply saved theme first
+        ThemeHelper.applySavedTheme(this)
+
         super.onCreate(savedInstanceState)
 
         //fetch session

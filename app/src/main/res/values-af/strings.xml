@@ -62,4 +62,5 @@
         <item>Afrikaans</item>
         <item>Zulu</item>
     </string-array>
+    <string name="the_username_you_registered_with">Die gebruikersnaam waarmee jy geregistreer het</string>
 </resources>

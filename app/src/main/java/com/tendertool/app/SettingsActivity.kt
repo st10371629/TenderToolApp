@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import com.amplifyframework.core.Amplify
 import com.tendertool.app.src.NavBar
+import com.tendertool.app.src.ThemeHelper
 import kotlin.math.log
 import com.tendertool.app.src.TopBarFragment
 import java.util.Locale
@@ -33,10 +34,7 @@ class SettingsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // Load theme setting before view inflation
-        prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val darkModeEnabled = prefs.getBoolean("dark_mode_enabled", false)
-        val mode = if (darkModeEnabled) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-        AppCompatDelegate.setDefaultNightMode(mode)
+        ThemeHelper.applySavedTheme(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
@@ -112,13 +110,19 @@ class SettingsActivity : BaseActivity() {
             val darkText = getString(R.string.theme_dark)
             textThemeStatus.text = if (isChecked) darkText else lightText
 
-            // Actually apply the theme
-            val newMode = if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-            AppCompatDelegate.setDefaultNightMode(newMode)
+            // Save and apply using ThemeHelper
+            ThemeHelper.saveThemePreference(this, isChecked)
 
-            // Save preference
-            prefs.edit().putBoolean("dark_mode_enabled", isChecked).apply()
+            // Restart the SettingsActivity with a fresh theme
+            val intent = Intent(this, SettingsActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+            // Smooth transition effect
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
+
+
 
         // Notifications switch and text
         val switchNotifications = findViewById<Switch>(R.id.switch_notifications)

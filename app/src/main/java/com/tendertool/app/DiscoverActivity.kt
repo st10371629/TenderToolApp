@@ -16,6 +16,7 @@ import com.tendertool.app.adapters.DiscoverAdapter
 import com.tendertool.app.models.BaseTender
 import com.tendertool.app.src.NavBar
 import com.tendertool.app.src.Retrofit
+import com.tendertool.app.src.ThemeHelper
 import com.tendertool.app.src.TopBarFragment
 import kotlinx.coroutines.launch
 
@@ -28,6 +29,7 @@ class DiscoverActivity : BaseActivity() {
     private var allTenders: List<BaseTender> = emptyList() // store fetched data
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeHelper.applySavedTheme(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discover)
 

@@ -12,6 +12,7 @@ import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.tendertool.app.src.NavBar
+import com.tendertool.app.src.ThemeHelper
 import com.tendertool.app.src.TopBarFragment
 import java.util.Calendar
 
@@ -20,6 +21,7 @@ class AnalyticsActivity : AppCompatActivity() {
     private lateinit var dailyActiveTimeText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeHelper.applySavedTheme(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_analytics)
 

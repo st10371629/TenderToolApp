@@ -18,6 +18,7 @@ import com.tendertool.app.src.Retrofit
 import com.tendertool.app.src.TopBarFragment
 import kotlinx.coroutines.launch
 import com.amplifyframework.core.Amplify
+import com.tendertool.app.src.ThemeHelper
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -33,6 +34,7 @@ class WatchlistActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeHelper.applySavedTheme(this)
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_watchlist)

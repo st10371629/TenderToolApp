@@ -58,7 +58,7 @@
 
     <string name="bookmark" translatable="false" />
     <string name="the_username_you_registered_with">The username you registered with</string>
-    <string name="username">Username</string>
+    <string name="username" translatable="false">Username</string>
 
     <string-array name="language_options">
         <item>English</item>

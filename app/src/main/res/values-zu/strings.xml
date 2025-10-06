@@ -62,4 +62,5 @@
         <item>IsiBhunu</item>
         <item>IsiZulu</item>
     </string-array>
+    <string name="the_username_you_registered_with">Igama lomsebenzisi obhalise ngalo</string>
 </resources>
