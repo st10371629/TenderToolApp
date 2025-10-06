@@ -40,11 +40,12 @@
             <ImageView
                 android:id="@+id/analyticsHeaderImage"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/analytics_header_description"
-                android:scaleType="centerCrop"
-                android:src="@drawable/analytics_header_banner" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/analytics_header_banner"
+                android:layout_marginBottom="8dp" />
 
             <!-- Wrap ALL content after header -->
             <LinearLayout
@@ -89,7 +90,7 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <Space
+                    <androidx.legacy.widget.Space
                         android:layout_width="16dp"
                         android:layout_height="wrap_content" />
 
