@@ -104,6 +104,6 @@ The demo video provides a walkthrough of the Tender Tool mobile application, sho
 - **Analytics:** User activity dashboard with optional daily active timer.  
 - **Settings:** Profile management, language and theme customisation, and logout.  
 
-The video highlights how users can seamlessly navigate through the app, explore tenders, and personalise their experience while maintaining security and efficiency.
+The video highlights how users can seamlessly navigate through the app, explore tenders, and personalise their experience while maintaining security and efficiency.  
 
-*(Link to the demo video will be added here once available.)*
+🎥 **Watch the demo video here:** [Tender Tool Demo](https://youtu.be/FvvjMCP9NiY)
