@@ -76,8 +76,8 @@ class LoginFragment : Fragment() {
                         // Switch to the main thread to update UI
                         activity?.runOnUiThread {
                             Toast.makeText(context, "Login successful!", Toast.LENGTH_SHORT).show()
-                            //Navigate to Settings Page
-                            val intent = Intent(activity, SettingsActivity::class.java)
+                            //Navigate to Watchlist Page
+                            val intent = Intent(activity, WatchlistActivity::class.java)
                             startActivity(intent)
                         }
                     } else {

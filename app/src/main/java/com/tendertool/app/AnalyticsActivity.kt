@@ -11,6 +11,8 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
+import com.tendertool.app.adapters.AnalyticsAdapter
 import com.tendertool.app.src.NavBar
 import com.tendertool.app.src.ThemeHelper
 import com.tendertool.app.src.TopBarFragment
@@ -19,6 +21,7 @@ import java.util.Calendar
 class AnalyticsActivity : AppCompatActivity() {
 
     private lateinit var dailyActiveTimeText: TextView
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applySavedTheme(this)
@@ -26,6 +29,7 @@ class AnalyticsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_analytics)
 
         dailyActiveTimeText = findViewById(R.id.text_daily_active_time)
+        viewPager = findViewById(R.id.viewPagerAnalytics)
 
         // initial check
         updateDailyActiveTime()
@@ -37,6 +41,10 @@ class AnalyticsActivity : AppCompatActivity() {
 
         // attach nav bar listeners
         NavBar.LoadNav(this)
+
+        //set up pager adapter
+        viewPager.adapter = AnalyticsAdapter(this)
+        viewPager.offscreenPageLimit = 1 //for now
     }
 
     override fun onResume() {
@@ -47,7 +55,7 @@ class AnalyticsActivity : AppCompatActivity() {
 
     private fun updateDailyActiveTime() {
         if (!hasUsageStatsPermission(this)) {
-            dailyActiveTimeText.text = "Permission needed (tap to enable)"
+            dailyActiveTimeText.text = "Permission Needed\n----\ntap to enable"
             dailyActiveTimeText.setOnClickListener {
                 startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
             }

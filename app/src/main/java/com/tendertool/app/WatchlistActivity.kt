@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.amplifyframework.auth.cognito.AWSCognitoAuthSession
 import com.tendertool.app.adapters.DiscoverAdapter
 import com.tendertool.app.adapters.WatchlistAdapter
 import com.tendertool.app.models.BaseTender
@@ -50,6 +51,8 @@ class WatchlistActivity : AppCompatActivity() {
         totalTenders = findViewById(R.id.TotalTenders)
         recyclerView = findViewById(R.id.watchlistRecycler)
         adapter = WatchlistAdapter(emptyList())
+        adapter.onToggleWatch = {tenderID -> toggleWatch(tenderID)}
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
         spinner = findViewById(R.id.loadingSpinner)
@@ -59,6 +62,70 @@ class WatchlistActivity : AppCompatActivity() {
 
         //fetch data from the API
         fetchWatchlist()
+    }
+
+    private fun toggleWatch(tenderID: String){
+        lifecycleScope.launch {
+            try {
+                //fetch CoreID using a coroutine suspend function
+                val userID = suspendCoroutine<String> { continuation ->
+                    Amplify.Auth.fetchUserAttributes(
+                        { attributes ->
+                            val coreID =
+                                attributes.firstOrNull { it.key.keyString == "custom:CoreID" }?.value
+
+                            //return necessary response
+                            if (coreID != null) {
+                                Log.d("Watchlist", "CoreID: ${coreID}")
+                                continuation.resume(coreID)
+                            } else {
+                                continuation.resumeWithException(
+                                    IllegalStateException("CoreID not found.")
+                                )
+                            }
+                        },
+                        { error ->
+                            Log.e("Watchlist", "Failed to retrieve attribute.", error)
+                            continuation.resumeWithException(error)
+                        })
+                }
+
+                Amplify.Auth.fetchAuthSession(
+                    { session ->
+                        if (session.isSignedIn) {
+                            val cognitoSession = session as AWSCognitoAuthSession
+                            val idToken = cognitoSession.userPoolTokensResult.value?.idToken
+                            Log.d("AuthSession", "ID Token: $idToken")
+
+                            val bearerToken = "Bearer $idToken"
+                            lifecycleScope.launch {
+                                try {
+                                    val api = Retrofit.api
+                                    val result = api.toggleWatchlist(bearerToken, userID, tenderID)
+
+                                    //Log and notify
+                                    Log.d("DiscoverActivity", "Toggled tender: ${result.tenderID}")
+                                    Toast.makeText(this@WatchlistActivity, "Watchlist updated.", Toast.LENGTH_SHORT).show()
+                                } catch (e: Exception) {
+                                    Log.e("API", "Error calling API: ${e.message}")
+                                }
+                            }
+                        } else {
+                            Log.e("AuthSession", "User not signed in")
+                        }
+                    },
+                    { error ->
+                        Log.e("AuthSession", "Failed to fetch session: ${error.message}", error)
+                    }
+                )
+                //refresh watchlist
+                fetchWatchlist()
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("WatchlistActivity", "Error toggling tenders: ${e.message}")
+            }
+        }
     }
 
     private fun fetchWatchlist()

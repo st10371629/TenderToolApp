@@ -16,6 +16,10 @@ object NavBar {
         val navAnalytics = activity.findViewById<LinearLayout>(R.id.navAnalytics)
         val navWatchlist = activity.findViewById<LinearLayout>(R.id.navWatchlist)
 
+        // If this page has no nav bar, exit early
+        if (navSettings == null || navDiscover == null || navAnalytics == null || navWatchlist == null) {
+            return
+        }
 
         navSettings.setOnClickListener {
             val intent = Intent(activity, SettingsActivity::class.java)

@@ -92,11 +92,4 @@
             </FrameLayout>
         </LinearLayout>
     </ScrollView>
-
-    <!-- Bottom navigation -->
-    <include
-        layout="@layout/nav_bar"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_gravity="bottom"/>
 </FrameLayout>

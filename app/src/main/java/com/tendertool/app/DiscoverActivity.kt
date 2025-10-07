@@ -8,9 +8,12 @@ import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.amplifyframework.auth.cognito.AWSCognitoAuthSession
+import com.amplifyframework.core.Amplify
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.tendertool.app.adapters.DiscoverAdapter
 import com.tendertool.app.models.BaseTender
@@ -19,6 +22,9 @@ import com.tendertool.app.src.Retrofit
 import com.tendertool.app.src.ThemeHelper
 import com.tendertool.app.src.TopBarFragment
 import kotlinx.coroutines.launch
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class DiscoverActivity : BaseActivity() {
 
@@ -43,6 +49,8 @@ class DiscoverActivity : BaseActivity() {
 
         recyclerView = findViewById(R.id.discoverRecycler)
         adapter = DiscoverAdapter(emptyList())
+        adapter.onToggleWatch = {tenderID -> toggleWatch(tenderID)}
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
         spinner = findViewById(R.id.loadingSpinner)
@@ -56,6 +64,68 @@ class DiscoverActivity : BaseActivity() {
 
         //fetch data from the API
         fetchTenders()
+    }
+
+    private fun toggleWatch(tenderID: String){
+        lifecycleScope.launch {
+            try {
+                //fetch CoreID using a coroutine suspend function
+                val userID = suspendCoroutine<String> { continuation ->
+                    Amplify.Auth.fetchUserAttributes(
+                        { attributes ->
+                            val coreID =
+                                attributes.firstOrNull { it.key.keyString == "custom:CoreID" }?.value
+
+                            //return necessary response
+                            if (coreID != null) {
+                                Log.d("Discover", "CoreID: ${coreID}")
+                                continuation.resume(coreID)
+                            } else {
+                                continuation.resumeWithException(
+                                    IllegalStateException("CoreID not found.")
+                                )
+                            }
+                        },
+                        { error ->
+                            Log.e("Discover", "Failed to retrieve attribute.", error)
+                            continuation.resumeWithException(error)
+                        })
+                }
+
+                Amplify.Auth.fetchAuthSession(
+                    { session ->
+                        if (session.isSignedIn) {
+                            val cognitoSession = session as AWSCognitoAuthSession
+                            val idToken = cognitoSession.userPoolTokensResult.value?.idToken
+                            Log.d("AuthSession", "ID Token: $idToken")
+
+                            val bearerToken = "Bearer $idToken"
+                            lifecycleScope.launch {
+                                try {
+                                    val api = Retrofit.api
+                                    val result = api.toggleWatchlist(bearerToken, userID, tenderID)
+
+                                    //Log and notify
+                                    Log.d("DiscoverActivity", "Toggled tender: ${result.tenderID}")
+                                    Toast.makeText(this@DiscoverActivity, "Watchlist updated.", Toast.LENGTH_SHORT).show()
+                                } catch (e: Exception) {
+                                    Log.e("API", "Error calling API: ${e.message}")
+                                }
+                            }
+                        } else {
+                            Log.e("AuthSession", "User not signed in")
+                        }
+                    },
+                    { error ->
+                        Log.e("AuthSession", "Failed to fetch session: ${error.message}", error)
+                    }
+                )
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("DiscoverActivity", "Error toggling tenders: ${e.message}")
+            }
+        }
     }
 
     private fun fetchTenders() {
