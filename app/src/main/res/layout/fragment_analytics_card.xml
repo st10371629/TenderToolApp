@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_analytics_chart"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChartClosingSoon"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_gravity="center" />
+
+    <!-- small subtitle below chart -->
+    <TextView
+        android:id="@+id/text_card_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="272dp"
+        android:gravity="center"
+        android:text="Watchlist: closing within 7 days"
+        android:textSize="13sp"
+        android:textColor="@color/text_input_grey" />
+
+</FrameLayout>

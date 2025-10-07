@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.tendertool.app.R
 import com.tendertool.app.models.BaseTender
+import com.tendertool.app.src.DateUtil.toSimpleDate
 
 class WatchlistAdapter(private var tenders: List<BaseTender>) : RecyclerView.Adapter<WatchlistAdapter.TenderViewHolder>()
 {
@@ -29,7 +30,7 @@ class WatchlistAdapter(private var tenders: List<BaseTender>) : RecyclerView.Ada
         val tender = tenders[position]
         holder.titleText.text = tender.title
         holder.locationText.text = tender.source
-        holder.closingDateText.text = tender.closingDate
+        holder.closingDateText.text = tender.closingDate.toSimpleDate()
         holder.statusText.text = tender.status
     }
 

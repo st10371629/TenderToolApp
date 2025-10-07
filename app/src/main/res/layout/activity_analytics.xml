@@ -123,124 +123,150 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Popular Categories Section -->
-                <TextView
+                <!-- Popular Categories Section - Commented out -->
+                <Space
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/analytics_popular_categories_label"
-                    android:textColor="@color/text_input_grey"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content">
 
-                <LinearLayout
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="32dp"-->
+<!--                        android:layout_marginBottom="8dp"-->
+<!--                        android:text="@string/analytics_popular_categories_label"-->
+<!--                        android:textColor="@color/text_input_grey"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:textStyle="bold" />-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:background="@drawable/analytics_card_bg"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:padding="24dp">-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginBottom="12dp"-->
+<!--                            android:text="@string/analytics_key_label"-->
+<!--                            android:textColor="@color/text_label_blue"-->
+<!--                            android:textStyle="bold" />-->
+
+<!--                        &lt;!&ndash; Categories &ndash;&gt;-->
+<!--                        &lt;!&ndash; Item 1 &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <View-->
+<!--                                android:layout_width="8dp"-->
+<!--                                android:layout_height="8dp"-->
+<!--                                android:background="@drawable/key_circle_shape"-->
+<!--                                android:backgroundTint="@color/pie_segment_dark_blue" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="8dp"-->
+<!--                                android:text="@string/analytics_category_software"-->
+<!--                                android:textColor="@color/text_input_grey"-->
+<!--                                android:textSize="12sp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        &lt;!&ndash; Item 2 &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="8dp"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <View-->
+<!--                                android:layout_width="8dp"-->
+<!--                                android:layout_height="8dp"-->
+<!--                                android:background="@drawable/key_circle_shape"-->
+<!--                                android:backgroundTint="@color/pie_segment_medium_blue" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="8dp"-->
+<!--                                android:text="@string/analytics_category_it"-->
+<!--                                android:textColor="@color/text_input_grey"-->
+<!--                                android:textSize="12sp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        &lt;!&ndash; Item 3 &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="8dp"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <View-->
+<!--                                android:layout_width="8dp"-->
+<!--                                android:layout_height="8dp"-->
+<!--                                android:background="@drawable/key_circle_shape"-->
+<!--                                android:backgroundTint="@color/pie_segment_yellow" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="8dp"-->
+<!--                                android:text="@string/analytics_category_telecom"-->
+<!--                                android:textColor="@color/text_input_grey"-->
+<!--                                android:textSize="12sp" />-->
+<!--                        </LinearLayout>-->
+
+<!--                        &lt;!&ndash; Item 4 &ndash;&gt;-->
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="8dp"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <View-->
+<!--                                android:layout_width="8dp"-->
+<!--                                android:layout_height="8dp"-->
+<!--                                android:background="@drawable/key_circle_shape"-->
+<!--                                android:backgroundTint="@color/pie_segment_red" />-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="8dp"-->
+<!--                                android:text="@string/analytics_category_consultancy"-->
+<!--                                android:textColor="@color/text_input_grey"-->
+<!--                                android:textSize="12sp" />-->
+<!--                        </LinearLayout>-->
+<!--                    </LinearLayout>-->
+                </Space>
+
+                <androidx.cardview.widget.CardView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/analytics_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/analytics_card_bg"
-                    android:orientation="vertical"
-                    android:padding="24dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:text="@string/analytics_key_label"
-                        android:textColor="@color/text_label_blue"
-                        android:textStyle="bold" />
-
-                    <!-- Categories -->
-                    <!-- Item 1 -->
-                    <LinearLayout
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="6dp"
+                    android:foreground="?android:attr/selectableItemBackground">
+                    
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewPagerAnalytics"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:padding="16dp" />
 
-                        <View
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:background="@drawable/key_circle_shape"
-                            android:backgroundTint="@color/pie_segment_dark_blue" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/analytics_category_software"
-                            android:textColor="@color/text_input_grey"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                    <!-- Item 2 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:background="@drawable/key_circle_shape"
-                            android:backgroundTint="@color/pie_segment_medium_blue" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/analytics_category_it"
-                            android:textColor="@color/text_input_grey"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Item 3 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:background="@drawable/key_circle_shape"
-                            android:backgroundTint="@color/pie_segment_yellow" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/analytics_category_telecom"
-                            android:textColor="@color/text_input_grey"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Item 4 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:background="@drawable/key_circle_shape"
-                            android:backgroundTint="@color/pie_segment_red" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="@string/analytics_category_consultancy"
-                            android:textColor="@color/text_input_grey"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

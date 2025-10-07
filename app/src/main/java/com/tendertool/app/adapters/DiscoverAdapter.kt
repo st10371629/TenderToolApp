@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.tendertool.app.R
 import com.tendertool.app.models.*
+import com.tendertool.app.src.DateUtil.toSimpleDate
 
 class DiscoverAdapter(private var tenders: List<BaseTender>) : RecyclerView.Adapter<DiscoverAdapter.TenderViewHolder>()
 {
@@ -28,7 +29,7 @@ class DiscoverAdapter(private var tenders: List<BaseTender>) : RecyclerView.Adap
         val tender = tenders[position]
         holder.titleText.text = tender.title
         holder.locationText.text = tender.source
-        holder.closingDateText.text = tender.closingDate
+        holder.closingDateText.text = tender.closingDate.toSimpleDate()
     }
 
     override fun getItemCount(): Int = tenders.size
