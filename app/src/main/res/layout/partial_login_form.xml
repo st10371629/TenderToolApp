@@ -87,6 +87,8 @@
         android:id="@+id/googleSignInImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_bg"
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:src="@drawable/google_signin" /> <!-- Replace with your image asset name -->
 
