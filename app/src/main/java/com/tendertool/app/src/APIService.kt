@@ -18,5 +18,5 @@ interface APIService
     suspend fun getWatchlist(@Path("user") userID: String): List<BaseTender>
 
     @POST("watchlist/togglewatch/{user}/{id}")
-    suspend fun toggleWatchlist(@Path("user") userID: String, @Path("id") id: String): BaseTender
+    suspend fun toggleWatchlist(@Header("Authorization") token: String, @Path("user") userID: String, @Path("id") id: String): BaseTender
 }

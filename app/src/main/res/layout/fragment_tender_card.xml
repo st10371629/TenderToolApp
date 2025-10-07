@@ -80,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:text="Lorem ipsum dolor sit amet"
                 android:layout_marginStart="4dp"
+                android:textStyle="bold"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -88,27 +89,16 @@
     <!-- Bookmark button bottom-right -->
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/bookmarkButton"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="8dp"
+        android:padding="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
         app:srcCompat="@drawable/bookmark_selector"
         android:contentDescription="@string/bookmark"
         android:scaleType="centerInside"/>
-
-    <TextView
-        android:id="@+id/tagText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:textSize="12sp"
-        android:textColor="@android:color/white"
-        android:background="@drawable/tag_background"
-        android:visibility="gone" />
 
 </FrameLayout>
