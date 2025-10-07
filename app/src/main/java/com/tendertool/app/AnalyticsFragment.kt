@@ -29,13 +29,17 @@ class AnalyticsFragment : Fragment(R.layout.fragment_analytics_card) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pieChart = view.findViewById(R.id.pieChartClosingSoon)
+        pieChart.centerText = "Loading..."
         setupPieChart()
 
         // Fetch watchlist async and update chart
         lifecycleScope.launch {
             try {
+                Log.d("AnalyticsFragment", "Fetching watchlist...")
                 val watchlist = fetchWatchlist()
+                Log.d("AnalyticsFragment", "Fetched watchlist: size = ${watchlist.size}")
                 updateChartWith(watchlist)
+                Log.d("AnalyticsFragment", "Chart updated with watchlist")
             } catch (e: Exception) {
                 Log.e("AnalyticsFragment", "Error in analytics flow: ${e.message}")
             }
@@ -85,6 +89,7 @@ class AnalyticsFragment : Fragment(R.layout.fragment_analytics_card) {
             setEntryLabelTypeface(Typeface.DEFAULT_BOLD)
             setEntryLabelColor(ContextCompat.getColor(requireContext(), R.color.grey))
             setDrawEntryLabels(true)
+            setDrawSlicesUnderHole(false)
 
             setCenterTextSize(14f)
             setCenterTextTypeface(Typeface.DEFAULT_BOLD)
@@ -107,10 +112,10 @@ class AnalyticsFragment : Fragment(R.layout.fragment_analytics_card) {
 
         if (total == 0) {
             // no data case
-            entries.add(PieEntry(1f, "No data"))
+            entries.add(PieEntry(1f, "No tenders found"))
         } else {
-            if (result.closingSoon > 0) entries.add(PieEntry(result.closingSoon.toFloat(), "Closing Soon"))
-            if (result.notClosingSoon > 0) entries.add(PieEntry(result.notClosingSoon.toFloat(), "Later"))
+            entries.add(PieEntry(result.closingSoon.toFloat(), "Closing Soon"))
+            entries.add(PieEntry(result.notClosingSoon.toFloat(), "Closing Later"))
         }
 
         val ds = PieDataSet(entries, "")
@@ -119,8 +124,10 @@ class AnalyticsFragment : Fragment(R.layout.fragment_analytics_card) {
 
         // color palette: closing soon (red), later (purple)
         val colors = mutableListOf<Int>()
-        colors.add(ContextCompat.getColor(requireContext(), R.color.accent_red))
-        colors.add(ContextCompat.getColor(requireContext(), R.color.primary_dark_blue))
+        colors.add(ContextCompat.getColor(requireContext(),
+            if (total > 0) R.color.accent_red else R.color.grey))
+        colors.add(ContextCompat.getColor(requireContext(),
+            if (total > 0) R.color.primary_dark_blue else R.color.grey))
         ds.colors = colors
 
         val pieData = PieData(ds)
@@ -130,12 +137,8 @@ class AnalyticsFragment : Fragment(R.layout.fragment_analytics_card) {
         pieData.setValueTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
 
         pieChart.data = pieData
-        pieChart.centerText = if (total == 0) "No watchlist data" else "Watchlist\n(${total} tenders)"
+        pieChart.centerText = if (total == 0) "No watchlist data" else "Watchlist\n${total} tenders"
+        if (total == 0) ds.colors = listOf(ContextCompat.getColor(requireContext(), R.color.grey))
         pieChart.invalidate()
-    }
-
-    private fun getCurrentUserId(): String {
-        // TODO: replace with real user id provider (Cognito/SharedPrefs)
-        return "test_user"
     }
 }
