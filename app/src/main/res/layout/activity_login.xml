@@ -1,49 +1,75 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
-    <!-- Background Image -->
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/background"
+        android:src="@drawable/login_background"
         android:scaleType="centerCrop"
         android:contentDescription="Background" />
 
-    <!-- Scrollable container -->
+    <LinearLayout
+        android:id="@+id/titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:paddingTop="64dp">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tender Tool"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Discover public tenders with ease and speed."
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp" />
+    </LinearLayout>
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/titleContainer"
         android:fillViewport="true"
-        android:padding="24dp">
+        android:paddingHorizontal="24dp"
+        android:paddingBottom="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            android:gravity="center_horizontal">
+            android:gravity="top|center_horizontal">
 
-            <!-- Card container -->
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/fragmentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
                 android:background="@drawable/login_card_bg"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
                 android:elevation="8dp"
                 android:padding="24dp"
+                android:layout_marginTop="20dp"
                 android:clipToOutline="true">
 
-                <!-- Tabs with indicator -->
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal">
 
-                    <!-- Tabs -->
                     <LinearLayout
                         android:id="@+id/tabContainer"
                         android:layout_width="wrap_content"
@@ -54,7 +80,7 @@
                             android:id="@+id/loginTab"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="40dp"
+                            android:layout_marginEnd="50dp"
                             android:text="Login"
                             android:textColor="#FFFFFF"
                             android:textSize="24sp"
@@ -71,25 +97,20 @@
                             android:paddingBottom="4dp" />
                     </LinearLayout>
 
-                    <!-- Indicator -->
                     <View
                         android:id="@+id/tabIndicator"
-                        android:layout_width="60dp"
-                        android:layout_height="2dp"
+                        android:layout_width="wrap_content" android:layout_height="2dp"
                         android:layout_gravity="bottom|start"
                         android:background="#FFFFFF"
-                        android:layout_marginTop="40dp"
                         android:translationX="0dp" />
                 </FrameLayout>
 
-                <!-- Fragment container for forms -->
                 <FrameLayout
                     android:id="@+id/formContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp" />
+                    android:layout_height="wrap_content" />
 
-            </FrameLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</FrameLayout>
+</RelativeLayout>

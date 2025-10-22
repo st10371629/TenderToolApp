@@ -41,7 +41,7 @@
     <string name="watchlist_header">Watchlist Header</string>
     <string name="filter_button_description">Filter watchlist</string>
     <string name="total_active_tenders">TOTAL ACTIVE TENDERS: </string>
-    <string name="closed_label">CLOSED</string>
+    <string name="closed_label">END</string>
 
     <!-- analytics page -->
     <string name="analytics_header_description">Analytics Header with decorative arrows</string>

@@ -9,9 +9,11 @@ import android.view.View
 import android.widget.TextView
 //import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import android.animation.ValueAnimator
 import com.amplifyframework.core.Amplify
 import com.tendertool.app.src.NavBar
 import com.tendertool.app.src.ThemeHelper
+import android.view.WindowManager
 
 class MainActivity : AppCompatActivity() {
 //    private val viewModel: TestViewModel by viewModels()
@@ -22,6 +24,9 @@ class MainActivity : AppCompatActivity() {
         ThemeHelper.applySavedTheme(this)
 
         super.onCreate(savedInstanceState)
+
+        // This tells the activity to resize when the keyboard opens
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         //fetch session
         Amplify.Auth.fetchAuthSession(
@@ -49,31 +54,60 @@ class MainActivity : AppCompatActivity() {
 
                         // Animate indicator to target X position
                         fun moveIndicatorTo(targetTab: TextView) {
+                            // Animate X position
                             ObjectAnimator.ofFloat(indicator, "translationX", targetTab.x).apply {
                                 duration = 200
                                 start()
                             }
+
+                            // Animate width
+                            val targetWidth = targetTab.width
+                            val widthAnimator = ValueAnimator.ofInt(indicator.width, targetWidth)
+                            widthAnimator.addUpdateListener { animation ->
+                                val newWidth = animation.animatedValue as Int
+                                val layoutParams = indicator.layoutParams
+                                layoutParams.width = newWidth
+                                indicator.layoutParams = layoutParams
+                            }
+                            widthAnimator.duration = 200
+                            widthAnimator.start()
                         }
 
                         // Set default indicator position under login tab
-                        indicator.post { moveIndicatorTo(loginTab) }
+                        indicator.post {
+                            // Set initial width
+                            val layoutParams = indicator.layoutParams
+                            layoutParams.width = loginTab.width
+                            indicator.layoutParams = layoutParams
 
-                        loginTab.setOnClickListener {
-                            supportFragmentManager.beginTransaction()
-                                .replace(R.id.formContainer, LoginFragment())
-                                .commit()
-                            loginTab.setTextColor(Color.WHITE)
-                            registerTab.setTextColor(Color.parseColor("#80FFFFFF"))
+                            // Set initial position
                             moveIndicatorTo(loginTab)
                         }
 
                         registerTab.setOnClickListener {
                             supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(
+                                    R.anim.slide_in_left,   // <-- New fragment enters from LEFT
+                                    R.anim.slide_out_right  // <-- Old fragment exits to RIGHT
+                                )
                                 .replace(R.id.formContainer, RegisterFragment())
                                 .commit()
                             registerTab.setTextColor(Color.WHITE)
                             loginTab.setTextColor(Color.parseColor("#80FFFFFF"))
                             moveIndicatorTo(registerTab)
+                        }
+
+                        loginTab.setOnClickListener {
+                            supportFragmentManager.beginTransaction()
+                                .setCustomAnimations(
+                                    R.anim.slide_in_right,  // <-- New fragment enters from RIGHT
+                                    R.anim.slide_out_left   // <-- Old fragment exits to LEFT
+                                )
+                                .replace(R.id.formContainer, LoginFragment())
+                                .commit()
+                            loginTab.setTextColor(Color.WHITE)
+                            registerTab.setTextColor(Color.parseColor("#80FFFFFF"))
+                            moveIndicatorTo(loginTab)
                         }
 
                         NavBar.LoadNav(this) //passes through the current activity, and loads nav intents
