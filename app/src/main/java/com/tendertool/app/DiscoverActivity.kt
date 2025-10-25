@@ -1,5 +1,6 @@
 package com.tendertool.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -50,6 +51,15 @@ class DiscoverActivity : BaseActivity() {
         recyclerView = findViewById(R.id.discoverRecycler)
         adapter = DiscoverAdapter(emptyList())
         adapter.onToggleWatch = {tenderID -> toggleWatch(tenderID)}
+
+        adapter.onCardClick = { tenderID ->
+            // Create an Intent to launch TenderDetailsActivity
+            val intent = Intent(this, TenderDetailsActivity::class.java).apply {
+                // Pass just the ID
+                putExtra(TenderDetailsActivity.TENDER_ID_KEY, tenderID)
+            }
+            startActivity(intent)
+        }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter

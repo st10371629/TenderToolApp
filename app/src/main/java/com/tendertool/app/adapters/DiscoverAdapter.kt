@@ -14,6 +14,8 @@ import com.tendertool.app.src.DateUtil.toSimpleDate
 class DiscoverAdapter(private var tenders: List<BaseTender>) : RecyclerView.Adapter<DiscoverAdapter.TenderViewHolder>()
 {
     var onToggleWatch: ((String) -> Unit)? = null
+    var onCardClick: ((String) -> Unit)? = null // Passes the tenderID as a String
+
 
     inner class TenderViewHolder(view: View) : RecyclerView.ViewHolder(view)
     {

@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity() {
                         registerTab.setOnClickListener {
                             supportFragmentManager.beginTransaction()
                                 .setCustomAnimations(
-                                    R.anim.slide_in_left,   // <-- New fragment enters from LEFT
-                                    R.anim.slide_out_right  // <-- Old fragment exits to RIGHT
+                                    R.anim.slide_in_left,
+                                    R.anim.slide_out_right
                                 )
                                 .replace(R.id.formContainer, RegisterFragment())
                                 .commit()
@@ -100,8 +100,8 @@ class MainActivity : AppCompatActivity() {
                         loginTab.setOnClickListener {
                             supportFragmentManager.beginTransaction()
                                 .setCustomAnimations(
-                                    R.anim.slide_in_right,  // <-- New fragment enters from RIGHT
-                                    R.anim.slide_out_left   // <-- Old fragment exits to LEFT
+                                    R.anim.slide_in_right,
+                                    R.anim.slide_out_left
                                 )
                                 .replace(R.id.formContainer, LoginFragment())
                                 .commit()
