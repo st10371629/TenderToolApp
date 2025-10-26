@@ -40,6 +40,12 @@ class DiscoverAdapter(private var tenders: List<BaseTender>) : RecyclerView.Adap
         holder.closingDateText.text = tender.closingDate.toSimpleDate()
         holder.statusText.text = tender.status
 
+        //tender details clicker
+        holder.itemView.setOnClickListener {
+            onCardClick?.invoke(tender.tenderID)
+        }
+
+        //bookmark clicker
         holder.bookmarkButton.setOnClickListener {
             val tender = tenders[position]
 

@@ -25,6 +25,7 @@
         <activity android:name=".DiscoverActivity" />
         <activity android:name=".AnalyticsActivity" />
         <activity android:name=".WatchlistActivity" />
+        <activity android:name=".TenderDetailsActivity" />
 
         <activity
             android:name=".MainActivity"

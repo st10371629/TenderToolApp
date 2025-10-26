@@ -9,6 +9,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.tendertool.app.adapters.TenderDetailsAdapter
 import com.tendertool.app.models.BaseTender
 import com.tendertool.app.src.NavBar
 import com.tendertool.app.src.Retrofit
@@ -67,10 +68,10 @@ class TenderDetailsActivity : BaseActivity() {
             try {
                 val api = Retrofit.api
 
-                //val tender = api.fetchTenderDetails(tenderId)
+                val tender = api.fetchTenderByID(tenderId)
 
                 // data fetched successfully, populate the UI
-                //populateUi(tender)
+                populateUi(tender)
 
                 // Hide spinner, show content
                 spinner.visibility = View.GONE
@@ -86,20 +87,8 @@ class TenderDetailsActivity : BaseActivity() {
     }
 
     private fun populateUi(tender: BaseTender) {
-        // Find all the detail TextViews
-        val title: TextView = findViewById(R.id.detailTenderTitle)
-        val status: TextView = findViewById(R.id.detailTenderStatus)
-        val tenderID: TextView = findViewById(R.id.detailTenderID)
-        val source: TextView = findViewById(R.id.detailTenderSource)
-        val publishedDate: TextView = findViewById(R.id.detailPublishedDate)
-        val closingDate: TextView = findViewById(R.id.detailClosingDate)
-        val description: TextView = findViewById(R.id.detailDescription)
-
-        title.text = tender.title
-        status.text = tender.status
-        tenderID.text = tender.tenderID // Set Tender ID
-        source.text = tender.source
-        description.text = tender.description ?: "No description provided."
-
+        //call adapter and populare tender details
+        val adapter = TenderDetailsAdapter(this@TenderDetailsActivity, findViewById(android.R.id.content))
+        adapter.bind(tender)
     }
 }
