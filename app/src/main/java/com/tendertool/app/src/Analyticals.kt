@@ -1,7 +1,9 @@
 package com.tendertool.app.src
 
+import android.util.Log
 import java.time.Instant
 import com.tendertool.app.models.BaseTender
+import com.tendertool.app.src.DateUtil.toSimpleDate
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -19,8 +21,12 @@ object Analyticals {
         var closingSoon = 0
         var validTotal = 0
 
-        watchlist.forEach { t ->
-            val raw = t.closingDate.format(DateTimeFormatter.ISO_LOCAL_DATE) ?: return@forEach
+        Log.d("AnalyticsDebug", "Starting calculation. Watchlist size: ${watchlist.size}")
+
+        watchlist.forEachIndexed { index, t ->
+            val raw = t.closingDate.toSimpleDate().format(DateTimeFormatter.ISO_LOCAL_DATE)
+            Log.d("AnalyticsDebug", "Tender[$index]: raw closingDate = $raw")
+
             val closingDate: LocalDate? = try
             {
                 //try ISO date
@@ -28,12 +34,14 @@ object Analyticals {
             }
             catch(e: Exception)
             {
+                Log.e("AnalyticsDebug", "Failed ISO parse for tender[$index]: ${e.message}")
                 try
                 {
                     Instant.ofEpochMilli(raw.toLong()).atZone(ZoneId.systemDefault()).toLocalDate()
                 }
-                catch (_: Exception)
+                catch (ex: Exception)
                 {
+                    Log.e("AnalyticsDebug", "Failed epoch parse for tender[$index]: ${ex.message}")
                     null
                 }
             }
@@ -42,11 +50,16 @@ object Analyticals {
             closingDate?.let { date ->
                 validTotal++
                 val daysUntil = ChronoUnit.DAYS.between(today, date)
+                Log.d("AnalyticsDebug", "Tender[$index]: closing in $daysUntil days")
                 if(daysUntil in 0..daysWindow) closingSoon++
-            }
+            } ?: Log.w("AnalyticsDebug", "Tender[$index] has invalid closing date")
         }
 
         val notClosingSoon = (validTotal - closingSoon).coerceAtLeast(0)
+        Log.d(
+            "AnalyticsDebug",
+            "Calculation complete: closingSoon=$closingSoon, notClosingSoon=$notClosingSoon"
+        )
         return ClosingSoonResult(closingSoon, notClosingSoon)
     }
 }
