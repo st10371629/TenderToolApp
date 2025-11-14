@@ -13,8 +13,21 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.amplifyframework.core.Amplify
+import android.widget.ImageButton
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
+import java.util.concurrent.Executor
 
 class LoginFragment : Fragment() {
+
+
+    // Biometric dialog
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,6 +43,47 @@ class LoginFragment : Fragment() {
         val passwordInput = view.findViewById<EditText>(R.id.passwordInput)
         val passwordToggle = view.findViewById<ImageView>(R.id.passwordToggle)
         val loginButton = view.findViewById<AppCompatButton>(R.id.confirmButton)
+
+
+        val fingerprintButton = view.findViewById<ImageButton>(R.id.fingerprintLoginButton)
+
+
+        executor = ContextCompat.getMainExecutor(requireContext())
+
+
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    // Show error message
+                    showToast("Authentication error: $errString")
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    showToast("Authentication succeeded!")
+
+
+                    val intent = Intent(activity, WatchlistActivity::class.java)
+                    startActivity(intent)
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+
+                    showToast("Authentication failed")
+                }
+            })
+
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Confirm with Fingerprint")
+            .setSubtitle("Touch fingerprint sensor")
+            .setNegativeButtonText("Use Password Instead")
+            .build()
+
+
 
         // Password visibility toggle
         var isPasswordVisible = false
@@ -94,5 +148,47 @@ class LoginFragment : Fragment() {
                 }
             )
         }
+
+
+        fingerprintButton.setOnClickListener {
+
+            checkAndAuthenticate()
+        }
+
+
+        checkDeviceCapability(fingerprintButton)
+
     }
+
+
+    private fun checkAndAuthenticate() {
+        val biometricManager = BiometricManager.from(requireContext())
+        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+
+                biometricPrompt.authenticate(promptInfo)
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
+                showToast("No biometric features available on this device.")
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
+                showToast("Biometric features are currently unavailable.")
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
+                showToast("Please enroll a fingerprint in your device settings.")
+        }
+    }
+
+
+    private fun checkDeviceCapability(fingerprintButton: ImageButton) {
+        val biometricManager = BiometricManager.from(requireContext())
+        if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) != BiometricManager.BIOMETRIC_SUCCESS) {
+
+            fingerprintButton.visibility = View.GONE
+        }
+    }
+
+
+    private fun showToast(msg: String) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
+
 }

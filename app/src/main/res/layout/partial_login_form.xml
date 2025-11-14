@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -82,5 +83,16 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:stateListAnimator="@null" />
+
+    <ImageButton
+        android:id="@+id/fingerprintLoginButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_fingerprint"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Login with fingerprint"
+        app:tint="#FFFFFF" />
 
 </LinearLayout>
