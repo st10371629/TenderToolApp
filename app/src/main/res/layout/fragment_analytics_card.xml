@@ -4,21 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pieChartClosingSoon"
-        android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:layout_gravity="center" />
-
-    <!-- small subtitle below chart -->
-    <TextView
-        android:id="@+id/text_card_subtitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="272dp"
-        android:gravity="center"
-        android:text="Watchlist: closing within 7 days"
-        android:textSize="13sp"
-        android:textColor="@color/text_input_grey" />
+        android:orientation="vertical">
 
+        <!-- small subtitle below chart -->
+        <TextView
+            android:id="@+id/text_card_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Watchlist: Tenders closing soon"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/text_input_grey" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChartClosingSoon"
+            android:layout_width="match_parent"
+            android:layout_height="340dp"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
 </FrameLayout>

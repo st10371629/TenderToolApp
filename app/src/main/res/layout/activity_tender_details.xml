@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/backgroundColor"
+    android:background="@color/white"
     tools:context=".TenderDetailsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -49,7 +49,7 @@
                 android:id="@+id/detailTenderTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 tools:text="Construction of Something Very Important" />
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Tender ID"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -82,7 +82,7 @@
                 android:id="@+id/detailTenderID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 tools:text="TEN-0012345" />
 
             <TextView
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Source"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -98,7 +98,7 @@
                 android:id="@+id/detailTenderSource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 tools:text="Eskom" />
 
             <TextView
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Published Date"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
                 android:id="@+id/detailPublishedDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 tools:text="2025-01-01" />
 
             <TextView
@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Closing Date"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -130,7 +130,7 @@
                 android:id="@+id/detailClosingDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 tools:text="2025-12-31" />
 
             <TextView
@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Description"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -146,7 +146,7 @@
                 android:id="@+id/detailDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorOnBackground"
+                android:textColor="@color/black"
                 tools:text="Here is a long description of the tender, what it involves, and what the requirements are. It could be several paragraphs long." />
 
         </LinearLayout>
