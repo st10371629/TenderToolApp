@@ -1,20 +1,18 @@
 package com.tendertool.app.models
 
-import androidx.room.Entity
 
-@Entity(tableName = "EskomTender")
-data class EskomTender
+class EskomTender
 (
-    override val tenderID: String,
-    override val title: String,
-    override val status: String,
-    override val publishedDate: String,
-    override val closingDate: String,
-    override val dateAppended: String,
-    override val source: String,
-    override val tags: List<Tag> = emptyList(),
-    override val description: String? = null,
-    override val supportingDocs: List<SupportingDoc> = emptyList(),
+    var tenderID_val: String,
+    var title_val: String,
+    var status_val: String,
+    var publishedDate_val: String,
+    var closingDate_val: String,
+    var dateAppended_val: String,
+    var source_val: String,
+    var tags_val: List<Tag> = emptyList(),
+    var description_val: String? = null,
+    var supportingDocs_val: List<SupportingDoc> = emptyList(),
 
     val tenderNumber: String?,
     val reference: String?,
@@ -24,4 +22,5 @@ data class EskomTender
     val address: String?,
     val province: String?,
 
-) : BaseTender(tenderID, title, status, publishedDate, closingDate, dateAppended, source, tags, description, supportingDocs)
+) : BaseTender(tenderID_val, title_val, status_val, publishedDate_val, closingDate_val,
+    dateAppended_val, source_val, description_val, tags_val, supportingDocs_val)

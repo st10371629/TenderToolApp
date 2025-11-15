@@ -3,6 +3,7 @@ package com.tendertool.app.models
 import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Ignore
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -11,18 +12,22 @@ import java.time.temporal.ChronoUnit
 open class BaseTender
     (
     @PrimaryKey
-    open val tenderID: String,
-    open val title: String,
-    open val status: String,
-    open val publishedDate: String,
-    open val closingDate: String,
-    open val dateAppended: String,
-    open val source: String,
-    open val tags: List<Tag> = emptyList(),
-    open val description: String? = null,
-    open val supportingDocs: List<SupportingDoc> = emptyList(),
-) {
+    open var tenderID: String,
+    open var title: String,
+    open var status: String,
+    open var publishedDate: String,
+    open var closingDate: String,
+    open var dateAppended: String,
+    open var source: String,
+    open var description: String?,
 
+    @Ignore
+    open var tags: List<Tag> = emptyList(),
+    @Ignore
+    open var supportingDocs: List<SupportingDoc> = emptyList(),
+) {
+    // No-arg constructor required by Room and subclasses
+    constructor() : this("", "", "", "", "", "", "", null)
     /**Checks if the tender is closing within X days from today.*/
     fun isClosingWithinDays(days: Int): Boolean {
         return try {
