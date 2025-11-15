@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.tendertool.app"
-        minSdk = 35
+        minSdk = 28
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -60,10 +60,14 @@ dependencies {
     //config mike-philjay charts
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
+    //Biometric library
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
+
     //config room dependencies
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.8.0")
+
 }

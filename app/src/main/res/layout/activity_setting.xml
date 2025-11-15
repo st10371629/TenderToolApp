@@ -164,24 +164,30 @@
                 android:textColor="@color/text_profile_options"
                 android:textSize="18sp" />
 
+            <!-- biometric switch -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="6dp">
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp">
+
+                <Switch
+                    android:id="@+id/switch_biometrics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:textOff=""
+                    android:textOn="" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/switch_biometrics"
                     android:text="@string/settings_biometric_login"
                     android:textColor="@color/text_profile_options"
                     android:textSize="18sp" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
             </RelativeLayout>
 
             <!-- log out button -->
