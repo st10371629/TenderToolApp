@@ -19,4 +19,11 @@ interface APIService
 
     @POST("watchlist/togglewatch/{user}/{id}")
     suspend fun toggleWatchlist(@Header("Authorization") token: String, @Path("user") userID: String, @Path("id") id: String): BaseTender
+
+    @POST("tender/fetchFiltered")
+    suspend fun fetchFilteredTenders(
+        @Query("page") page: Int,
+        @Query("pageSize") pageSize: Int,
+        @Body filterDto: FilterDto
+    ): PaginatedResponse
 }

@@ -1,6 +1,8 @@
 package com.tendertool.app.src
 
 import okhttp3.OkHttpClient
+import com.tendertool.app.models.PaginatedResponse
+import com.tendertool.app.models.FilterDto
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

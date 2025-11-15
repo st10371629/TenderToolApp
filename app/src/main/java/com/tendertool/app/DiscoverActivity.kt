@@ -9,6 +9,7 @@ import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.RadioGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,8 @@ import com.amplifyframework.core.Amplify
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.tendertool.app.adapters.DiscoverAdapter
 import com.tendertool.app.models.BaseTender
+import com.tendertool.app.models.FilterDto
+import com.tendertool.app.models.PaginatedResponse
 import com.tendertool.app.src.NavBar
 import com.tendertool.app.src.Retrofit
 import com.tendertool.app.src.ThemeHelper
@@ -29,33 +32,56 @@ import kotlin.coroutines.suspendCoroutine
 
 class DiscoverActivity : BaseActivity() {
 
-    //private variables
+    // pagination
+    private val PAGE_SIZE = 10
+    private var currentPage = 1
+    private var totalPages = 0
+
+    // stores the 10 tenders received
+    private var lastFetchedTenders: List<BaseTender> = emptyList()
+
+    // filter state
+    private var currentSortOption: String = "Descending"
+    private var currentServerFilters = FilterDto(
+        sort = "Descending",
+        // all other fields are null/empty bc filtering is handled locally.
+        dateFilter = null,
+        alphaSort = null,
+        sources = emptyList()
+    )
+
+    // local filter state
+    private var currentClosingDateId: Int = 0
+    private var currentAlphabeticalId: Int = 0
+    private var currentSourceEskom: Boolean = false
+    private var currentSourceEtenders: Boolean = false
+
+
+    // UI stuff
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: DiscoverAdapter
     private lateinit var spinner: ProgressBar
-    private var allTenders: List<BaseTender> = emptyList() // store fetched data
+    private lateinit var prevButton: Button
+    private lateinit var nextButton: Button
+    private lateinit var pageIndicator: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applySavedTheme(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discover)
 
-        // Attach TopBarFragment to the container
+        // Attach Fragments
         supportFragmentManager.beginTransaction()
             .replace(R.id.topBarContainer, TopBarFragment())
             .commit()
-
-        // attach nav bar listeners
         NavBar.LoadNav(this)
 
         recyclerView = findViewById(R.id.discoverRecycler)
         adapter = DiscoverAdapter(emptyList())
         adapter.onToggleWatch = {tenderID -> toggleWatch(tenderID)}
-
         adapter.onCardClick = { tenderID ->
-            // Create an Intent to launch TenderDetailsActivity
             val intent = Intent(this, TenderDetailsActivity::class.java).apply {
-                // Pass just the ID
                 putExtra(TenderDetailsActivity.TENDER_ID_KEY, tenderID)
             }
             startActivity(intent)
@@ -65,153 +91,199 @@ class DiscoverActivity : BaseActivity() {
         recyclerView.adapter = adapter
         spinner = findViewById(R.id.loadingSpinner)
 
-        // Filter button
+        // pagination controls setup
+        prevButton = findViewById(R.id.prevButton)
+        nextButton = findViewById(R.id.nextButton)
+        pageIndicator = findViewById(R.id.pageIndicator)
+
+        prevButton.setOnClickListener { navigatePage(-1) }
+        nextButton.setOnClickListener { navigatePage(1) }
+
+        // filter button
         val filterButton = findViewById<ImageButton>(R.id.filterButton)
         filterButton.setOnClickListener { showFilterOverlay() }
 
-        // Show spinner before fetching data
         spinner.visibility = View.VISIBLE
 
-        //fetch data from the API
-        fetchTenders()
+        // Initial data fetch: fetches Page 1 with 10 items
+        fetchTendersWithFilters()
     }
 
     private fun toggleWatch(tenderID: String){
+        // authentication and API logic to toggle watchlist item
         lifecycleScope.launch {
             try {
-                //fetch CoreID using a coroutine suspend function
                 val userID = suspendCoroutine<String> { continuation ->
-                    Amplify.Auth.fetchUserAttributes(
-                        { attributes ->
-                            val coreID =
-                                attributes.firstOrNull { it.key.keyString == "custom:CoreID" }?.value
-
-                            //return necessary response
-                            if (coreID != null) {
-                                Log.d("Discover", "CoreID: ${coreID}")
-                                continuation.resume(coreID)
-                            } else {
-                                continuation.resumeWithException(
-                                    IllegalStateException("CoreID not found.")
-                                )
-                            }
-                        },
-                        { error ->
-                            Log.e("Discover", "Failed to retrieve attribute.", error)
-                            continuation.resumeWithException(error)
-                        })
+                    Amplify.Auth.fetchUserAttributes({ attributes ->
+                        val coreID = attributes.firstOrNull { it.key.keyString == "custom:CoreID" }?.value
+                        if (coreID != null) continuation.resume(coreID) else continuation.resumeWithException(IllegalStateException("CoreID not found."))
+                    }, { error -> continuation.resumeWithException(error) })
                 }
 
-                Amplify.Auth.fetchAuthSession(
-                    { session ->
-                        if (session.isSignedIn) {
-                            val cognitoSession = session as AWSCognitoAuthSession
-                            val idToken = cognitoSession.userPoolTokensResult.value?.idToken
-                            Log.d("AuthSession", "ID Token: $idToken")
-
-                            val bearerToken = "Bearer $idToken"
-                            lifecycleScope.launch {
-                                try {
-                                    val api = Retrofit.api
-                                    val result = api.toggleWatchlist(bearerToken, userID, tenderID)
-
-                                    //Log and notify
-                                    Log.d("DiscoverActivity", "Toggled tender: ${result.tenderID}")
-                                    Toast.makeText(this@DiscoverActivity, "Watchlist updated.", Toast.LENGTH_SHORT).show()
-                                } catch (e: Exception) {
-                                    Log.e("API", "Error calling API: ${e.message}")
-                                }
+                Amplify.Auth.fetchAuthSession({ session ->
+                    if (session.isSignedIn) {
+                        val cognitoSession = session as AWSCognitoAuthSession
+                        val idToken = cognitoSession.userPoolTokensResult.value?.idToken
+                        val bearerToken = "Bearer $idToken"
+                        lifecycleScope.launch {
+                            try {
+                                val api = Retrofit.api
+                                api.toggleWatchlist(bearerToken, userID, tenderID)
+                                Toast.makeText(this@DiscoverActivity, "Watchlist updated.", Toast.LENGTH_SHORT).show()
+                            } catch (e: Exception) {
+                                Log.e("API", "Error calling API: ${e.message}")
                             }
-                        } else {
-                            Log.e("AuthSession", "User not signed in")
                         }
-                    },
-                    { error ->
-                        Log.e("AuthSession", "Failed to fetch session: ${error.message}", error)
                     }
-                )
+                }, { error -> Log.e("AuthSession", "Failed to fetch session: ${error.message}", error) })
 
             } catch (e: Exception) {
-                e.printStackTrace()
                 Log.e("DiscoverActivity", "Error toggling tenders: ${e.message}")
             }
         }
     }
 
-    private fun fetchTenders() {
+    // fetches ONLY 10 items for the current page
+    private fun fetchTendersWithFilters() {
         lifecycleScope.launch {
+            spinner.visibility = View.VISIBLE
+
+            // pass dto
+            val filterDto = currentServerFilters.copy(
+                sort = currentSortOption
+            )
+
+            Log.d("DiscoverActivity", "Fetching Page $currentPage, Size $PAGE_SIZE with MINIMAL DTO: $filterDto")
+
             try {
                 val api = Retrofit.api
-                val tenders: List<BaseTender> = api.fetchTenders()
 
-                // Store fetched data in allTenders
-                allTenders = tenders
-                Log.d("DiscoverActivity", "Fetched ${tenders.size} tenders")
+                val response: PaginatedResponse = api.fetchFilteredTenders(
+                    page = currentPage,
+                    pageSize = PAGE_SIZE,
+                    filterDto = filterDto
+                )
 
-                // update RecyclerView
-                adapter.updateData(tenders)
+                // 1. store the 10 fetched items
+                lastFetchedTenders = response.data
 
-                // hide spinner
-                spinner.visibility = View.GONE
+                // 2. update total pages
+                totalPages = response.totalPages
+
+                // 3. apply local filters to the set of 10 tenders
+                applyLocalFilteringAndPagination()
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.e("DiscoverActivity", "Error fetching tenders: ${e.message}")
+                adapter.updateData(emptyList())
+                totalPages = 0
+                updatePaginationControls(emptyList())
+            } finally {
                 spinner.visibility = View.GONE
             }
         }
     }
 
+    private fun applyLocalFilteringAndPagination() {
+        // Run client-side filtering/sorting based on current local state
+        val filteredSubset = filterTendersLocally(
+            lastFetchedTenders,
+            currentClosingDateId,
+            currentAlphabeticalId,
+            currentSourceEskom,
+            currentSourceEtenders
+        )
+
+        // Update the RecyclerView and controls
+        adapter.updateData(filteredSubset)
+        updatePaginationControls(filteredSubset)
+    }
+
+    private fun navigatePage(direction: Int) {
+        val newPage = currentPage + direction
+
+        if (newPage >= 1 && newPage <= totalPages) {
+            currentPage = newPage
+            // Re-fetch data from the server for the new page
+            fetchTendersWithFilters()
+            recyclerView.scrollToPosition(0)
+        }
+    }
+
+    private fun updatePaginationControls(currentDisplayedList: List<BaseTender>) {
+        prevButton.isEnabled = currentPage > 1
+        nextButton.isEnabled = currentPage < totalPages
+
+        pageIndicator.text = "Page $currentPage of $totalPages"
+
+        val visibility = if (totalPages > 0) View.VISIBLE else View.GONE
+        prevButton.visibility = visibility
+        nextButton.visibility = visibility
+        pageIndicator.visibility = visibility
+
+        Log.d("DiscoverActivity", "Local filter applied. Displaying ${currentDisplayedList.size} of 10 fetched tenders.")
+    }
+
+    // filter overlay logic
     private fun showFilterOverlay() {
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.filter_overlay, null)
         dialog.setContentView(view)
 
-        val cancelButton = view.findViewById<Button>(R.id.cancelButton)
-        val clearButton = view.findViewById<Button>(R.id.clearButton)
         val applyButton = view.findViewById<Button>(R.id.applyButton)
-
+        val clearButton = view.findViewById<Button>(R.id.clearButton)
+        val cancelButton = view.findViewById<Button>(R.id.cancelButton)
         cancelButton.setOnClickListener { dialog.dismiss() }
 
+
         clearButton.setOnClickListener {
+            // reset UI controls state
             view.findViewById<RadioGroup>(R.id.closingDateGroup).clearCheck()
             view.findViewById<RadioGroup>(R.id.alphabeticalGroup).clearCheck()
             view.findViewById<CheckBox>(R.id.sourceEskom).isChecked = false
             view.findViewById<CheckBox>(R.id.sourceEtenders).isChecked = false
+
+            // reset local filter state and apply immediately
+            currentClosingDateId = 0
+            currentAlphabeticalId = 0
+            currentSourceEskom = false
+            currentSourceEtenders = false
+
+            applyLocalFilteringAndPagination()
+            dialog.dismiss()
         }
 
         applyButton.setOnClickListener {
-            // Read selections
-            val closingDateId = view.findViewById<RadioGroup>(R.id.closingDateGroup).checkedRadioButtonId
-            val alphabeticalId = view.findViewById<RadioGroup>(R.id.alphabeticalGroup).checkedRadioButtonId
-            val sourceEskom = view.findViewById<CheckBox>(R.id.sourceEskom).isChecked
-            val sourceEtenders = view.findViewById<CheckBox>(R.id.sourceEtenders).isChecked
+            // Read and SAVE the new LOCAL filter state
+            currentClosingDateId = view.findViewById<RadioGroup>(R.id.closingDateGroup).checkedRadioButtonId
+            currentAlphabeticalId = view.findViewById<RadioGroup>(R.id.alphabeticalGroup).checkedRadioButtonId
+            currentSourceEskom = view.findViewById<CheckBox>(R.id.sourceEskom).isChecked
+            currentSourceEtenders = view.findViewById<CheckBox>(R.id.sourceEtenders).isChecked
 
-            // Show spinner
             spinner.visibility = View.VISIBLE
 
-            // Run filtering and update the recycler view
-            lifecycleScope.launch {
-                filterTenders(closingDateId, alphabeticalId, sourceEskom, sourceEtenders)
+            // Apply filters to the current 10 items without re-fetching from the server
+            applyLocalFilteringAndPagination()
 
-                // Hide spinner and dismiss dialog after filtering
-                spinner.visibility = View.GONE
-                dialog.dismiss()
-            }
+            spinner.visibility = View.GONE
+            dialog.dismiss()
         }
 
         dialog.show()
     }
 
-    private fun filterTenders(
+    // filter logic
+    private fun filterTendersLocally(
+        tendersToFilter: List<BaseTender>,
         closingDateId: Int,
         alphabeticalId: Int,
         sourceEskom: Boolean,
         sourceEtenders: Boolean
-    ) {
-        Log.d("DiscoverActivity", "Filtering: closingDateId=$closingDateId, alphabeticalId=$alphabeticalId, sourceEskom=$sourceEskom, sourceEtenders=$sourceEtenders")
+    ): List<BaseTender> {
+        Log.d("DiscoverActivity", "Applying LOCAL Filtering to 10 items.")
 
-        var filtered = allTenders
-        Log.d("DiscoverActivity", "Initial tenders count: ${filtered.size}")
+        var filtered = tendersToFilter
 
         // Filter by closing date
         filtered = when (closingDateId) {
@@ -220,7 +292,6 @@ class DiscoverActivity : BaseActivity() {
             R.id.closing3Months -> filtered.filter { it.isClosingWithinDays(90) }
             else -> filtered
         }
-        Log.d("DiscoverActivity", "After closing date filter: ${filtered.size}")
 
         // Filter by source
         val selectedSources = mutableListOf<String>()
@@ -228,17 +299,15 @@ class DiscoverActivity : BaseActivity() {
         if (sourceEtenders) selectedSources.add("eTenders")
         if (selectedSources.isNotEmpty()) filtered =
             filtered.filter { selectedSources.contains(it.source) }
-        Log.d("DiscoverActivity", "After source filter: ${filtered.size}")
 
         // Sort alphabetically
         filtered = when (alphabeticalId) {
             R.id.alphabetAsc -> filtered.sortedBy { it.title }
             R.id.alphabetDesc -> filtered.sortedByDescending { it.title }
+            // Keep existing server sort if no alphabetical sort is selected
             else -> filtered
         }
-        Log.d("DiscoverActivity", "After sorting: ${filtered.size}")
 
-        // Update RecyclerView
-        adapter.updateData(filtered)
+        return filtered
     }
 }
