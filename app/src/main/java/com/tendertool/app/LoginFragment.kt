@@ -18,15 +18,22 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import java.util.concurrent.Executor
+import android.content.Context
+import android.content.SharedPreferences
 
 class LoginFragment : Fragment() {
-
 
     // Biometric dialog
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
+    // Add SharedPreferences and keys
+    private val PREFS_NAME = "app_settings"
+    private val KEY_BIOMETRICS_ENABLED = "BIOMETRICS_ENABLED"
+    private val KEY_BIOMETRICS_USERNAME = "BIOMETRICS_USERNAME"
+    private lateinit var prefs: SharedPreferences
+    private var fingerprintButton: ImageButton? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,18 +45,17 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize SharedPreferences
+        prefs = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
         // Find your UI elements from the layout
         val usernameInput = view.findViewById<EditText>(R.id.usernameInput)
         val passwordInput = view.findViewById<EditText>(R.id.passwordInput)
         val passwordToggle = view.findViewById<ImageView>(R.id.passwordToggle)
         val loginButton = view.findViewById<AppCompatButton>(R.id.confirmButton)
-
-
-        val fingerprintButton = view.findViewById<ImageButton>(R.id.fingerprintLoginButton)
-
+        fingerprintButton = view.findViewById(R.id.fingerprintLoginButton)
 
         executor = ContextCompat.getMainExecutor(requireContext())
-
 
         biometricPrompt = BiometricPrompt(this, executor,
             object : BiometricPrompt.AuthenticationCallback() {
@@ -62,11 +68,7 @@ class LoginFragment : Fragment() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    showToast("Authentication succeeded!")
-
-
-                    val intent = Intent(activity, WatchlistActivity::class.java)
-                    startActivity(intent)
+                    checkCognitoSession()
                 }
 
                 override fun onAuthenticationFailed() {
@@ -136,7 +138,6 @@ class LoginFragment : Fragment() {
                         }
                     } else {
                         Log.i("AmplifyLogin", "Sign in not complete, next step is: ${result.nextStep}")
-                        // This case handles things like MFA or Biometrics...
                     }
                 },
                 { error ->
@@ -150,16 +151,75 @@ class LoginFragment : Fragment() {
         }
 
 
-        fingerprintButton.setOnClickListener {
-
+        fingerprintButton?.setOnClickListener {
             checkAndAuthenticate()
         }
-
-
-        checkDeviceCapability(fingerprintButton)
-
     }
 
+    override fun onResume() {
+        super.onResume()
+        // checks if prefs is initialized
+        if (::prefs.isInitialized) {
+            checkDeviceCapability()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fingerprintButton = null // Clean up the view reference
+    }
+
+    private fun checkCognitoSession() {
+        val savedUsername = prefs.getString(KEY_BIOMETRICS_USERNAME, null)
+        if (savedUsername == null) {
+            showToast("Biometric error. Please log in with password.")
+            return
+        }
+
+        showToast("Biometric success. Checking session...")
+
+        Amplify.Auth.fetchAuthSession(
+            { session ->
+                if (session.isSignedIn) {
+                    // Session is valid
+                    Amplify.Auth.getCurrentUser(
+                        { currentUser ->
+                            if (currentUser.username == savedUsername) {
+                                // SUCCESS!
+                                Log.i("AmplifyLogin", "Biometric login successful for $savedUsername")
+                                activity?.runOnUiThread {
+                                    val intent = Intent(activity, WatchlistActivity::class.java)
+                                    startActivity(intent)
+                                    activity?.finish() // Finish login activity
+                                }
+                            } else {
+                                // Biometrics are for a different user who logged out
+                                activity?.runOnUiThread {
+                                    showToast("Biometrics enabled for a different user. Please use password.")
+                                }
+                            }
+                        },
+                        { error ->
+                            activity?.runOnUiThread {
+                                showToast("Could not verify user. Please use password.")
+                            }
+                        }
+                    )
+                } else {
+                    // Biometric scan was OK, but the Cognito session is expired.
+                    activity?.runOnUiThread {
+                        showToast("Your session has expired. Please log in with your password.")
+                    }
+                }
+            },
+            { error ->
+                Log.e("AmplifyLogin", "Failed to fetch session", error)
+                activity?.runOnUiThread {
+                    showToast("Could not verify session. Please use password.")
+                }
+            }
+        )
+    }
 
     private fun checkAndAuthenticate() {
         val biometricManager = BiometricManager.from(requireContext())
@@ -177,15 +237,15 @@ class LoginFragment : Fragment() {
         }
     }
 
-
-    private fun checkDeviceCapability(fingerprintButton: ImageButton) {
+    private fun checkDeviceCapability() {
+        val isEnabledInSettings = prefs.getBoolean(KEY_BIOMETRICS_ENABLED, false)
         val biometricManager = BiometricManager.from(requireContext())
-        if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) != BiometricManager.BIOMETRIC_SUCCESS) {
-
-            fingerprintButton.visibility = View.GONE
+        if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS && isEnabledInSettings) {
+            fingerprintButton?.visibility = View.VISIBLE
+        } else {
+            fingerprintButton?.visibility = View.GONE
         }
     }
-
 
     private fun showToast(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

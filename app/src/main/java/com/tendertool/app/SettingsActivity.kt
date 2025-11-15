@@ -24,12 +24,24 @@ import com.tendertool.app.src.ThemeHelper
 import kotlin.math.log
 import com.tendertool.app.src.TopBarFragment
 import java.util.Locale
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
+import java.util.concurrent.Executor
 
 class SettingsActivity : BaseActivity() {
 
     private lateinit var prefs: SharedPreferences
     private val PREFS_NAME = "app_settings"
     private val KEY_LANGUAGE = "app_language"
+
+    //Biometrics
+    private val KEY_BIOMETRICS_ENABLED = "BIOMETRICS_ENABLED"
+    private val KEY_BIOMETRICS_USERNAME = "BIOMETRICS_USERNAME"
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var switchBiometrics: Switch
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -183,6 +195,118 @@ class SettingsActivity : BaseActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
+
+        // Start biometrics logics
+
+        // Initialize Biometric components
+        executor = ContextCompat.getMainExecutor(this)
+        switchBiometrics = findViewById(R.id.switch_biometrics)
+        setupBiometricPrompt()
+
+        // Check current biometric setting
+        val isBiometricsEnabled = prefs.getBoolean(KEY_BIOMETRICS_ENABLED, false)
+        switchBiometrics.isChecked = isBiometricsEnabled
+
+        // Set the listener
+        switchBiometrics.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // User wants to turn it ON
+                enrollBiometrics()
+            } else {
+                // User wants to turn it OFF
+                disableBiometrics()
+            }
+        }
+
+        // Disable switch if hardware isn't supported
+        val biometricManager = BiometricManager.from(this)
+        if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) != BiometricManager.BIOMETRIC_SUCCESS) {
+            switchBiometrics.isEnabled = false
+        }
+    }
+
+    private fun setupBiometricPrompt() {
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    // User cancelled or an error occurred
+                    showToast("Authentication error: $errString")
+                    switchBiometrics.isChecked = false // Toggle back off
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    // Authentication was successful, now save the setting
+                    Amplify.Auth.getCurrentUser(
+                        { authUser ->
+
+                            val username = authUser.username
+
+                            // Save the settings
+                            prefs.edit()
+                                .putBoolean(KEY_BIOMETRICS_ENABLED, true)
+                                .putString(KEY_BIOMETRICS_USERNAME, username)
+                                .commit()
+
+                            runOnUiThread {
+                                showToast("Biometric login enabled")
+                            }
+                        },
+                        { error ->
+                            Log.e("SettingsBiometric", "Could not get current user", error)
+
+                            runOnUiThread {
+                                showToast("Error enabling biometrics. Not signed in?")
+                                switchBiometrics.isChecked = false
+                            }
+                        }
+                    )
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    showToast("Authentication failed")
+                    switchBiometrics.isChecked = false // Toggle back off
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Enable Biometric Login")
+            .setSubtitle("Confirm your identity to enable biometric login")
+            .setNegativeButtonText("Cancel")
+            .build()
+    }
+
+    private fun enrollBiometrics() {
+        // This function is called when the switch is turned ON
+        val biometricManager = BiometricManager.from(this)
+        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS ->
+                biometricPrompt.authenticate(promptInfo) // Show the prompt
+
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
+                showToast("Please enroll a fingerprint in your device settings first.")
+
+            // Other errors
+            else ->
+                showToast("Biometric features are unavailable.")
+        }
+        // If auth fails, the callback will set the switch back to false
+    }
+
+    private fun disableBiometrics() {
+        // This function is called when the switch is turned OFF
+        prefs.edit()
+            .putBoolean(KEY_BIOMETRICS_ENABLED, false)
+            .remove(KEY_BIOMETRICS_USERNAME)
+            .commit()
+        showToast("Biometric login disabled")
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
     // Function to change app language dynamically
@@ -190,6 +314,7 @@ class SettingsActivity : BaseActivity() {
         val appLocale = LocaleListCompat.forLanguageTags(languageCode)
         AppCompatDelegate.setApplicationLocales(appLocale)
     }
-}
+  }
+
 
 

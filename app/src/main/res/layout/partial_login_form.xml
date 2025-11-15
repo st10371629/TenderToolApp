@@ -92,7 +92,6 @@
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_fingerprint"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Login with fingerprint"
-        app:tint="#FFFFFF" />
+        android:contentDescription="Login with fingerprint" />
 
 </LinearLayout>
