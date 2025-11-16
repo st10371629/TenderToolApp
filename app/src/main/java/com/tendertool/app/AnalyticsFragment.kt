@@ -58,7 +58,8 @@ class AnalyticsFragment : Fragment(R.layout.fragment_analytics_card) {
                     lifecycleScope.launch {
                         try {
                             val api = Retrofit.api
-                            val tenders = api.getWatchlist(coreID)
+                            val apiResponse = api.getWatchlist(coreID)
+                            val tenders = apiResponse.watchlist
                             continuation.resume(tenders)
                         } catch (e: Exception) {
                             Log.e("AnalyticsFragment", "Error fetching tenders: ${e.message}")

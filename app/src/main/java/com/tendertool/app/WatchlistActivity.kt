@@ -10,29 +10,26 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.amplifyframework.auth.cognito.AWSCognitoAuthSession
-import com.tendertool.app.adapters.DiscoverAdapter
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.tendertool.app.adapters.WatchlistAdapter
-import com.tendertool.app.models.BaseTender
 import com.tendertool.app.src.NavBar
-import com.tendertool.app.src.Retrofit
+import com.tendertool.app.src.TenderRepository
+import com.tendertool.app.src.ThemeHelper
 import com.tendertool.app.src.TopBarFragment
 import kotlinx.coroutines.launch
-import com.amplifyframework.core.Amplify
-import com.tendertool.app.src.ThemeHelper
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
+import com.tendertool.app.MyAmplifyApp
 
 class WatchlistActivity : AppCompatActivity() {
 
-    //private variables
+    // Views
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: WatchlistAdapter
     private lateinit var spinner: ProgressBar
-    private var allTenders: List<BaseTender> = emptyList() // store fetched data
     private lateinit var totalTenders: TextView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
+    // Data
+    private lateinit var repository: TenderRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applySavedTheme(this)
@@ -40,141 +37,107 @@ class WatchlistActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_watchlist)
 
-        // Attach TopBarFragment to the container
+        // Get the repository from our Application class
+        repository = (application as MyAmplifyApp).tenderRepository
+
+        // Setup all views
+        setupViews()
+
+        // Observe the local database
+        observeWatchlist()
+
+        // Start the initial data fetch
+        refreshWatchlistData()
+    }
+
+    private fun setupViews() {
+        // Top Bar & Nav Bar
         supportFragmentManager.beginTransaction()
             .replace(R.id.topBarContainer, TopBarFragment())
             .commit()
-
-        // attach nav bar listeners
         NavBar.LoadNav(this)
 
+        // Find Views
         totalTenders = findViewById(R.id.TotalTenders)
         recyclerView = findViewById(R.id.watchlistRecycler)
-        adapter = WatchlistAdapter(emptyList())
-        adapter.onToggleWatch = {tenderID -> toggleWatch(tenderID)}
+        spinner = findViewById(R.id.loadingSpinner)
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
 
+        // Setup RecyclerView & Adapter
+        adapter = WatchlistAdapter { tenderID ->
+            toggleWatch(tenderID)
+        }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
-        spinner = findViewById(R.id.loadingSpinner)
 
-        // Show spinner before fetching data
-        spinner.visibility = View.VISIBLE
-
-        //fetch data from the API
-        fetchWatchlist()
+        // Setup Swipe-to-Refresh
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshWatchlistData()
+        }
     }
 
-    private fun toggleWatch(tenderID: String){
+    /**
+     * Observes the local database (Flow) for any changes
+     * and submits the new list to the adapter.
+     */
+    private fun observeWatchlist() {
         lifecycleScope.launch {
-            try {
-                //fetch CoreID using a coroutine suspend function
-                val userID = suspendCoroutine<String> { continuation ->
-                    Amplify.Auth.fetchUserAttributes(
-                        { attributes ->
-                            val coreID =
-                                attributes.firstOrNull { it.key.keyString == "custom:CoreID" }?.value
+            repository.watchlistTenders.collect { tendersFromDb ->
+                // This 'collect' block runs every time the data in Room changes
+                Log.d("WatchlistActivity", "Local database updated. Count: ${tendersFromDb.size}")
 
-                            //return necessary response
-                            if (coreID != null) {
-                                Log.d("Watchlist", "CoreID: ${coreID}")
-                                continuation.resume(coreID)
-                            } else {
-                                continuation.resumeWithException(
-                                    IllegalStateException("CoreID not found.")
-                                )
-                            }
-                        },
-                        { error ->
-                            Log.e("Watchlist", "Failed to retrieve attribute.", error)
-                            continuation.resumeWithException(error)
-                        })
-                }
+                // Submit the new list to ListAdapter
+                adapter.submitList(tendersFromDb)
 
-                Amplify.Auth.fetchAuthSession(
-                    { session ->
-                        if (session.isSignedIn) {
-                            val cognitoSession = session as AWSCognitoAuthSession
-                            val idToken = cognitoSession.userPoolTokensResult.value?.idToken
-                            Log.d("AuthSession", "ID Token: $idToken")
-
-                            val bearerToken = "Bearer $idToken"
-                            lifecycleScope.launch {
-                                try {
-                                    val api = Retrofit.api
-                                    val result = api.toggleWatchlist(bearerToken, userID, tenderID)
-
-                                    //Log and notify
-                                    Log.d("DiscoverActivity", "Toggled tender: ${result.tenderID}")
-                                    Toast.makeText(this@WatchlistActivity, "Watchlist updated.", Toast.LENGTH_SHORT).show()
-                                } catch (e: Exception) {
-                                    Log.e("API", "Error calling API: ${e.message}")
-                                }
-                            }
-                        } else {
-                            Log.e("AuthSession", "User not signed in")
-                        }
-                    },
-                    { error ->
-                        Log.e("AuthSession", "Failed to fetch session: ${error.message}", error)
-                    }
-                )
-                //refresh watchlist
-                fetchWatchlist()
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Log.e("WatchlistActivity", "Error toggling tenders: ${e.message}")
+                // Update total tenders text
+                totalTenders.text = "TOTAL ACTIVE TENDERS: ${tendersFromDb.size}"
             }
         }
     }
 
-    private fun fetchWatchlist()
-    {
+    /**
+     * Called by Swipe-to-Refresh or onCreate to fetch data from the API.
+     */
+    private fun refreshWatchlistData() {
+        // Show loading indicator
+        // Only show the big spinner if the list is empty
+        if (adapter.itemCount == 0) {
+            spinner.visibility = View.VISIBLE
+        } else {
+            // Show the pull-to-refresh spinner
+            swipeRefreshLayout.isRefreshing = true
+        }
+
         lifecycleScope.launch {
-            try{
-                //fetch CoreID using a coroutine suspend function
-                val userID = suspendCoroutine<String> { continuation ->
-                    Amplify.Auth.fetchUserAttributes(
-                        { attributes ->
-                            val coreID = attributes.firstOrNull {it.key.keyString == "custom:CoreID"}?.value
-
-                            //return necessary response
-                            if (coreID != null) {
-                                Log.d("Watchlist", "CoreID: ${coreID}")
-                                continuation.resume(coreID)
-                            }
-                            else {
-                                continuation.resumeWithException(
-                                    IllegalStateException("CoreID not found.")
-                                )
-                            }
-                        },
-                        { error ->
-                            Log.e("Watchlist", "Failed to retrieve attribute.", error)
-                            continuation.resumeWithException(error)
-                        })
-                }
-
-                val api = Retrofit.api
-                val tenders: List<BaseTender> = api.getWatchlist(userID)
-
-                //store fetched data in allTenders
-                allTenders = tenders
-
-                //set totalTenders Text
-                totalTenders.text = "TOTAL ACTIVE TENDERS: ${tenders.size}"
-                Log.d("WatchlistActivity", "Fetched ${tenders.size} tenders")
-
-                // update RecyclerView
-                adapter.updateData(tenders)
-
-                // hide spinner
-                spinner.visibility = View.GONE
-            }
-            catch (e: Exception) {
+            try {
+                // This single call handles API fetch and saving to Room.
+                repository.refreshWatchlist()
+            } catch (e: Exception) {
                 e.printStackTrace()
-                Log.e("WatchlistActivity", "Error fetching tenders: ${e.message}")
+                Log.e("WatchlistActivity", "Error refreshing tenders: ${e.message}")
+                Toast.makeText(this@WatchlistActivity, "Failed to load watchlist", Toast.LENGTH_SHORT).show()
+            } finally {
+                // Hide all loading indicators
                 spinner.visibility = View.GONE
+                swipeRefreshLayout.isRefreshing = false
+            }
+        }
+    }
+
+    /**
+     * Called when the bookmark icon is clicked.
+     */
+    private fun toggleWatch(tenderID: String) {
+        lifecycleScope.launch {
+            try {
+                // This single call handles the API toggle and refreshes the data.
+                repository.toggleWatchlist(tenderID)
+
+                Toast.makeText(this@WatchlistActivity, "Watchlist updated.", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("WatchTry", "Error toggling tenders: ${e.message}")
+                Toast.makeText(this@WatchlistActivity, "Error updating watchlist", Toast.LENGTH_SHORT).show()
             }
         }
     }
