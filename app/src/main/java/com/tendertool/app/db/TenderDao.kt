@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 interface TenderDao {
 
     // Gets all tenders from the watchlist and returns them as a Flow.
-    // The UI can "observe" this Flow and will auto-update when the data changes.
     @Query("SELECT * FROM BaseTender")
     fun getWatchlistTenders(): Flow<List<BaseTender>>
 

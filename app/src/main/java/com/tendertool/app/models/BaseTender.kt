@@ -4,9 +4,6 @@ import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.Ignore
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 
 @Entity(tableName = "BaseTender")
 open class BaseTender

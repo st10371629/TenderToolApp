@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tendertool.app.models.BaseTender
 
-// list TypeConverters here
 @Database(entities = [BaseTender::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -23,8 +22,6 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "tender_database"
                 )
-                    // If you change the schema, this will wipe the DB.
-                    // For production, you'd use a real migration.
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

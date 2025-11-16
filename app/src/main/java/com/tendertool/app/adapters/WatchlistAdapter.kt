@@ -26,8 +26,6 @@ class WatchlistAdapter(
 
         init {
             bookmarkButton.setOnClickListener {
-                // --- FIX 1: Use 'adapterPosition' instead of 'bindingAdapterPosition' ---
-                // We also add a check to prevent crashes if the item is deleted
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val tender = getItem(position)
@@ -69,7 +67,6 @@ class WatchlistAdapter(
     }
 }
 
-// --- FIX 2: Update DiffCallback to manually compare fields ---
 class TenderDiffCallback : DiffUtil.ItemCallback<BaseTender>() {
     override fun areItemsTheSame(oldItem: BaseTender, newItem: BaseTender): Boolean {
         return oldItem.tenderID == newItem.tenderID

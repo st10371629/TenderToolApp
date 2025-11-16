@@ -10,18 +10,15 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-// This is the "Single Source of Truth" for your watchlist data
 class TenderRepository(
     private val tenderDao: TenderDao,
     private val apiService: APIService
 ) {
 
-    // The UI will read from this. It's the local database, wrapped in a Flow.
     val watchlistTenders: Flow<List<BaseTender>> = tenderDao.getWatchlistTenders()
 
     /**
      * Fetches the latest watchlist from the API and updates the local Room database.
-     * The UI will automatically update thanks to the Flow.
      */
     suspend fun refreshWatchlist() {
         Log.d("TenderRepository", "Refreshing watchlist...")
@@ -45,7 +42,7 @@ class TenderRepository(
             // If the network fails, we don't crash.
             // The user will just keep seeing the old data from Room.
             Log.e("TenderRepository", "Failed to sync watchlist", e)
-            throw e // Re-throw to let the UI know (e.g., to stop a spinner)
+            throw e
         }
     }
 
@@ -61,17 +58,17 @@ class TenderRepository(
             // Call the toggle API
             apiService.toggleWatchlist("Bearer $authToken", userID, tenderID)
 
-            // After toggling, refresh the *entire* watchlist
+            // After toggling, refresh the entire watchlist
             // This ensures our local database is perfectly in sync.
             refreshWatchlist()
 
         } catch (e: Exception) {
             Log.e("TenderRepository", "Failed to toggle watchlist", e)
-            throw e // Re-throw to let the UI know
+            throw e
         }
     }
 
-    // --- Amplify Helper Functions ---
+    // Amplify Helper Functions
 
     private suspend fun getCoreID(): String {
         return suspendCoroutine { continuation ->

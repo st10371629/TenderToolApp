@@ -37,16 +37,16 @@ class WatchlistActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_watchlist)
 
-        // 1. Get the repository from our Application class
+        // Get the repository from our Application class
         repository = (application as MyAmplifyApp).tenderRepository
 
-        // 2. Setup all views
+        // Setup all views
         setupViews()
 
-        // 3. Observe the local database
+        // Observe the local database
         observeWatchlist()
 
-        // 4. Start the initial data fetch
+        // Start the initial data fetch
         refreshWatchlistData()
     }
 
@@ -86,7 +86,7 @@ class WatchlistActivity : AppCompatActivity() {
                 // This 'collect' block runs every time the data in Room changes
                 Log.d("WatchlistActivity", "Local database updated. Count: ${tendersFromDb.size}")
 
-                // Submit the new list to our ListAdapter
+                // Submit the new list to ListAdapter
                 adapter.submitList(tendersFromDb)
 
                 // Update total tenders text
@@ -110,7 +110,7 @@ class WatchlistActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                // This single call handles API fetch AND saving to Room.
+                // This single call handles API fetch and saving to Room.
                 repository.refreshWatchlist()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -130,7 +130,7 @@ class WatchlistActivity : AppCompatActivity() {
     private fun toggleWatch(tenderID: String) {
         lifecycleScope.launch {
             try {
-                // This single call handles the API toggle AND refreshes the data.
+                // This single call handles the API toggle and refreshes the data.
                 repository.toggleWatchlist(tenderID)
 
                 Toast.makeText(this@WatchlistActivity, "Watchlist updated.", Toast.LENGTH_SHORT).show()
@@ -141,7 +141,4 @@ class WatchlistActivity : AppCompatActivity() {
             }
         }
     }
-
-    // We no longer need the old fetchWatchlist() function.
-    // All that logic is in the TenderRepository!
 }
