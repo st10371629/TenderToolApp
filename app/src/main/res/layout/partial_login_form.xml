@@ -86,7 +86,7 @@
         android:id="@+id/textViewOr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="14dp"
         android:fontFamily="@font/poppinsregular"
         android:gravity="center"
         android:text="OR"
@@ -97,7 +97,7 @@
         android:id="@+id/googleSignInButton"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/google_sign_in"
         android:clickable="true"
         android:focusable="true">
@@ -127,16 +127,18 @@
             android:textSize="18sp" />
 
     </RelativeLayout>
-  
-      <ImageButton
+
+    <ImageButton
         android:id="@+id/fingerprintLoginButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_fingerprint"
+        android:src="@drawable/ic_fingerprints"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Login with fingerprint" />
-  
+        android:contentDescription="Login with fingerprint"
+        android:scaleType="fitCenter"
+        android:padding="12dp" />
+
 </LinearLayout>
 

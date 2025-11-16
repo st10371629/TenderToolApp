@@ -134,8 +134,6 @@ class SettingsActivity : BaseActivity() {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
-
-
         // Notifications switch and text
         val switchNotifications = findViewById<Switch>(R.id.switch_notifications)
         val textNotificationsStatus = findViewById<TextView>(R.id.text_notifications_status)
