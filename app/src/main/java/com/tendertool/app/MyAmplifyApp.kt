@@ -8,6 +8,7 @@ import com.amplifyframework.core.Amplify
 import com.tendertool.app.db.AppDatabase
 import com.tendertool.app.src.TenderRepository
 import com.tendertool.app.src.Retrofit as RetrofitClient
+import com.tendertool.app.src.Notifications
 
 class MyAmplifyApp : Application() {
 
@@ -25,6 +26,9 @@ class MyAmplifyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        //create our Notiification channel
+        Notifications.createChannel(this)
 
         try {
             // Add the Cognito Auth plugin to Amplify

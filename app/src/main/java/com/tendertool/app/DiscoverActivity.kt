@@ -22,6 +22,7 @@ import com.tendertool.app.models.BaseTender
 import com.tendertool.app.models.FilterDto
 import com.tendertool.app.models.PaginatedResponse
 import com.tendertool.app.src.NavBar
+import com.tendertool.app.src.Notifications
 import com.tendertool.app.src.Retrofit
 import com.tendertool.app.src.ThemeHelper
 import com.tendertool.app.src.TopBarFragment
@@ -130,6 +131,10 @@ class DiscoverActivity : BaseActivity() {
                                 val api = Retrofit.api
                                 api.toggleWatchlist(bearerToken, userID, tenderID)
                                 Toast.makeText(this@DiscoverActivity, "Watchlist updated.", Toast.LENGTH_SHORT).show()
+
+                                val title = "Tender Saved"
+                                val body = "Saved tender: ${tenderID}"
+                                Notifications.showNotification(applicationContext, tenderID.hashCode(), title, body)
                             } catch (e: Exception) {
                                 Log.e("API", "Error calling API: ${e.message}")
                             }
