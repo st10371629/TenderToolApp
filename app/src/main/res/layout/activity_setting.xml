@@ -156,19 +156,11 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="12dp"
-                android:text="@string/settings_change_password"
-                android:textColor="@color/text_profile_options"
-                android:textSize="18sp" />
-
             <!-- biometric switch -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="0dp">
 
                 <Switch
                     android:id="@+id/switch_biometrics"

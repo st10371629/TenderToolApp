@@ -97,6 +97,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
+        app:tint="@color/text_hint_and_icon_grey"
         app:srcCompat="@drawable/bookmark_selector"
         android:contentDescription="@string/bookmark"
         android:scaleType="centerInside"/>

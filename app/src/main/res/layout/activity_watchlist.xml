@@ -7,19 +7,6 @@
     android:background="@color/app_background"
     tools:context=".WatchlistActivity">
 
-    <!-- Top bar -->
-<!--    <TextView-->
-<!--        android:id="@+id/textView2"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="&lt;/androidx.coordinatorlayout.widget.CoordinatorLayout>" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="&lt;/androidx.coordinatorlayout.widget.CoordinatorLayout>" />-->
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -140,7 +127,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="5dp"
+                android:layout_marginTop="12dp">
 
                 <!-- Total Active Tenders Bar -->
                 <TextView

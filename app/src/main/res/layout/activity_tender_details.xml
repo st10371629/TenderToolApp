@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_background"
     tools:context=".TenderDetailsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -36,7 +37,7 @@
         android:layout_height="0dp"
         android:visibility="gone"
         android:clipToPadding="false"
-        android:padding="16dp"
+        android:padding="20dp"
         app:layout_constraintBottom_toTopOf="@+id/navBar"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout"
         tools:visibility="visible">
@@ -60,6 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="14dp"
                 android:background="@drawable/status_badge_background"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
@@ -70,18 +72,18 @@
                 tools:backgroundTint="#4CAF50"
                 tools:text="Open" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="?attr/colorSurface"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true">
+                app:cardBackgroundColor="@color/tender_card"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/tender_card_stroke"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/card_background"
                     android:orientation="vertical"
                     android:padding="16dp">
 
@@ -89,6 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tender ID"
+                        android:textStyle="bold"
                         android:textColor="?android:attr/textColorSecondary"
                         android:textSize="14sp" />
 
@@ -105,6 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="Source"
+                        android:textStyle="bold"
                         android:textColor="?android:attr/textColorSecondary"
                         android:textSize="14sp" />
 
@@ -121,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="Published Date"
+                        android:textStyle="bold"
                         android:textColor="?android:attr/textColorSecondary"
                         android:textSize="14sp" />
 
@@ -137,6 +142,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="Closing Date"
+                        android:textStyle="bold"
                         android:textColor="?android:attr/textColorSecondary"
                         android:textSize="14sp" />
 
@@ -149,21 +155,21 @@
                         tools:text="2025-12-31" />
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="?attr/colorSurface"
-                app:cardElevation="2dp"
-                app:cardUseCompatPadding="true">
+                app:cardBackgroundColor="@color/tender_card"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/tender_card_stroke"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@drawable/card_background"
                     android:padding="16dp">
 
                     <TextView
@@ -185,7 +191,7 @@
                         tools:text="Here is a long description of the tender, what it involves, and what the requirements are. It could be several paragraphs long." />
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <View
                 android:layout_width="match_parent"
