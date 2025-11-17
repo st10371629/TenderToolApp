@@ -4,21 +4,22 @@
 ## Table of Contents
 1. [Overview](#overview)
 2. [App Information](#app-information)
-3. [Features](#features)
+3. [Release Notes (v1.0.0)](#release-notes-v100)
+4. [Features](#features)
     - [Feature Highlights](#feature-highlights)
     - [Core Functionality](#core-functionality)
-4. [Implementation Highlights](#implementation-highlights)
+5. [Implementation Highlights](#implementation-highlights)
     - [Performance](#performance)
     - [UI/UX & Stability](#uiux--stability)
-5. [Installation and Setup](#installation-and-setup)
+6. [Installation and Setup](#installation-and-setup)
     - [Prerequisites](#prerequisites)
     - [Mobile App Setup](#mobile-app-setup)
-6. [API Architecture](#api-architecture)
+7. [API Architecture](#api-architecture)
     - [Overview](#overview-1)
     - [Data Flow](#data-flow)
     - [Technologies](#technologies)
-7. [Security and Data Handling](#security-and-data-handling)
-8. [Demo Video](#demo-video)
+8. [Security and Data Handling](#security-and-data-handling)
+9. [Demo Video](#demo-video)
 
 ---
 
@@ -37,20 +38,50 @@ The app focuses on accessibility and data-driven insights, transitioning from an
 
 ---
 
+## Release Notes (v1.0.0)
+**Transition from Prototype to Production**
+
+This is the first major public release of Tender Tool, marking the transition from our initial prototype to a fully-featured, secure, and deployment-ready application. This version introduces the complete end-to-end user experience, from secure authentication to real-time tender discovery and analytics.
+
+### New Features Added Since Prototype
+* **Full User Authentication:** Implemented a complete, secure registration and login system managed by AWS Cognito. This includes:
+    * New user registration with email.
+    * A confirmation code screen to verify user accounts.
+    * Secure password and Google SSO login.
+* **Biometric Login:** For rapid and secure access, users can now enable biometric authentication (fingerprint recognition) after their initial login, leveraging the AndroidX Biometric library.
+* **Offline Sync with RoomDB:** Introduced offline support for the user's watchlist. The app now uses a local Room Database to cache saved tenders, allowing users to view critical tender information even without an internet connection.
+* **Real-time Push Notifications:** Integrated Firebase Cloud Messaging to provide real-time alerts. Users now receive instant notifications for updates on their saved tenders or for new tenders that match their criteria.
+
+### Core Feature Implementation
+* **Discovery Page:** The main tender discovery feed is now live. Tenders are loaded from the .NET Core API and displayed in a clean, filterable card layout.
+* **Watchlist:** Users can now save tenders to a personal watchlist for easy tracking.
+* **Analytics Dashboard:** A new analytics screen has been added to display user activity metrics, including an optional daily active time tracker (which respectfully requests usage permissions).
+
+### Improvements & Bug Fixes
+* **UI/UX Enhancements:**
+    * Replaced jarring screen changes with smooth, context-aware animations.
+    * Fragment transitions now use bidirectional slides to match the tab layout.
+    * The login/register card animates its height to grow/shrink when switching between forms of different sizes.
+    * Fixed layout "jumping" by pinning the card to the top of the scrollable area.
+* **Stability & Usability:**
+    * Resolved all keyboard-related issues using `adjustResize`, ensuring input fields are never obscured.
+    * Added robust form validation to handle invalid inputs (e.g., empty fields, password mismatch) and display clear error messages without crashing.
+    * The tab indicator bar now dynamically animates its width and position to perfectly match the "Login" and "Register" text.
+* **Performance:**
+    * **Pagination:** Implemented pagination on the Discovery Page. Tenders are now loaded in efficient batches of 10 at a time as the user scrolls, significantly improving initial load time and reducing memory usage.
+
+---
+
 ## Features
 
 ### Feature Highlights
-
 The Tender Tool experience is defined by three core features:
 
 * **Tender Discovery & Filtering:** The app's primary innovation is its unified discovery engine. Users can now seamlessly search and apply complex filters (by category, location, or closing date) from a single overlay. This transforms a time-consuming manual search into an efficient, targeted process.
-
 * **Tender Tracking & Watchlist:** Users can save tenders to a **Watchlist**, which is a separate screen that lists all saved items for easy reference. The app sends a push notification to confirm when a tender has been successfully added to the list.
-
 * **User Activity Analytics:** An analytics dashboard shows the user's activity by displaying the total time spent in the app, the number of tenders viewed today, and a chart summarising the closing dates for tenders on the Watchlist (e.g., how many are closing soon versus later).
 
 ### Core Functionality
-
 * **Full User Authentication:** A complete, secure registration and login system managed by AWS Cognito. This includes new user registration with email, a confirmation code screen, secure password login, and Google SSO.
 * **Biometric Login:** For rapid, secure access, users can enable biometric authentication (fingerprint recognition) after their initial login, leveraging the AndroidX Biometric library.
 * **Offline Sync for Watchlist:** The app uses a local **Room Database** to cache saved tenders, allowing users to view critical tender information even without an internet connection.
