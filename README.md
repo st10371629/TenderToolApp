@@ -157,4 +157,4 @@ The demo video provides a walkthrough of the Tender Tool mobile application, sho
 - **Analytics:** User activity dashboard.
 - **Settings:** Profile management, language and theme customisation, and logout.
 
-🎥 **Watch the demo video here:** [Tender Tool Demo](https://youtu.be/FvvjMCP9NiY)
+🎥 **Watch the demo video here:** [Tender Tool Demo](https://youtu.be/ojq-fkQA3k8)
